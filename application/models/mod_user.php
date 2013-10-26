@@ -3,17 +3,24 @@
 class Mod_user extends CI_Model{
 
     private $user = 'user';
+	private $user_type = 'user_type';
 
     function getUser($email, $password = NULL){
-        $this->db->where('user_email', $email);
+		$this->db->cache_off();
+		
+		$this->db->select('*');
+		$this->db->from($this->user);
+		$this->db->join($this->user_type, "{$this->user_type}.user_type_id = {$this->user}.user_type");
+		
+        $this->db->where("{$this->user}.user_email", $email);
 
         if(!is_null($password)){
-            $this->db->where('user_password', $password);
+            $this->db->where("{$this->user}.user_password", $password);
         }
-        $this->db->where('user_status', 1);
-        $this->db->where('user_type !=', 4);
+        $this->db->where("{$this->user}.user_status", 1);
+        $this->db->where("{$this->user}.user_type !=", 4);
 
-        $query = $this->db->get($this->user);
+        $query = $this->db->get();
 
         if($query->num_rows() > 0){
             return $query->row();
