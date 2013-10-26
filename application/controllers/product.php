@@ -22,7 +22,9 @@ class Product extends MY_Controller{
 					$upload = (object)$this->upload_image($product_id);
 					
 					if($upload->status){
-						if($this->mod_product->update_prod(array('product_image' => $upload->response->file_name), $product_id)){
+						$data = array('product_image' => $upload->response->file_name);
+						
+						if($this->mod_product->update_primary_image($data, $product_id)){
 							$pagedata['response'] = '<div class="alert alert-success">Product image updated</div>';
 						}
 						else{
@@ -58,11 +60,11 @@ class Product extends MY_Controller{
 				}
             }
 			
-			$pagedata['product'] = $this->mod_product->get_product($product_id);
-			$pagedata['artisans'] = $this->mod_product->get_prod_artisan($product_id);
-            $pagedata['album'] = $this->mod_product->get_album($product_id);
-
-			$pagedata['article'] =  $this->mod_article->getArticle($pagedata['product']->article_id);
+			$pagedata['product']		= $this->mod_product->get_product($product_id);
+			$pagedata['artisans']		= $this->mod_product->get_prod_artisan($product_id);
+			$pagedata['article']			= $this->mod_article->getArticle($pagedata['product']->article_id);
+			$pagedata['collections']	= $this->mod_product->get_collection($product_id);
+			$pagedata['album']			= $this->mod_product->get_album($product_id);
 			
 			$contentdata['page'] = $this->load->view('page/product', $pagedata, TRUE);		
 			$this->templateLoader($contentdata);
@@ -70,23 +72,6 @@ class Product extends MY_Controller{
 		else{
 			$this->load->view('page/login');
 		}
-	}
-	
-	private function upload_image($id){
-		$config['file_name'] = $id.'_'.date('YmdHis');
-		$config['upload_path'] = $this->config->item('product_upload_path');
-		$config['allowed_types'] = 'gif|jpg|pjpeg|jpeg|png|x-png';
-		$config['max_size']	= '1024';
-		$config['max_width']  = '1024';
-		$config['max_height']  = '768';
-		
-		$this->load->library('upload', $config);
-		
-		if($this->upload->do_upload('product_image')){
-			return array('status' => TRUE, 'response' => (object)$this->upload->data());
-		}
-		
-		return array('status' => FALSE, 'response' => $this->upload->display_errors('<div class="alert alert-error">', '</div>'));
 	}
 	
 	public function lists(){		
@@ -190,32 +175,6 @@ class Product extends MY_Controller{
         return FALSE;
     }
 	
-	private function validate_image($file, $valid_types, $required_size, $image_path, $divide_image_size=FALSE) {
-		$filename = $file['name'];
-		$tempname = $file['tmp_name'];
-		$filetype = $file['type'];
-		$filesize = ($file['size'] / 1024);
-		if ($divide_image_size) {
-			$filesize = ($file['size'] / $divide_image_size);
-		}
-		
-		$error_message = "Image Error : Please try again later";
-		if($file["error"] == 0){
-			$error_message = "Image Error : Invalid type of file";
-			if(in_array($filetype, $valid_types)){
-				$error_message = "Image Error :File size exceeded";
-				if($filesize <= $required_size){
-					$error_message = "Image Error : Failed to upload file";
-					if(move_uploaded_file($tempname, $image_path.$filename)){
-						return "TRUE";
-					}
-				}
-			}
-		}
-		
-		return $error_message;		
-	}
-	
 	public function create(){
         if($this->user->is_logged_in()){
             $contentdata['script'] = array('admin', 'product', 'jquery.inputlimiter.1.3.1.min', 'chosen.jquery.min');
@@ -223,61 +182,66 @@ class Product extends MY_Controller{
 
             $pagedata = $this->_page_defaults('New Product', 'products', 'productslist');
 			
-			//$pagedata['themes'] = $this->mod_theme->getThemeLists("collection_name", "asc");
-            $pagedata['artisans'] = $this->mod_artisan->get_artisans(NULL, NULL, "artisan_name", "asc");
-			
 			if (isset($_POST['save_product'])) {
-				$success_message = "";
-				$error_message = "";
 				if ($this->form_validation->run('create_product') == FALSE) {
-					$error_message = validation_errors();
+					$error_message = validation_errors('<div class="alert alert-danger">', '</div>');
 				}
 				else {
-					$required_size = 4096; // kilobytes
-					$image_path = $this->config->item('product_upload_path');					
-					$valid_types = $this->config->item('filetypes');					
-					$file = $_FILES["product_image"]; 					
-					$filename = str_replace('_', ' ', basename($file['name']));
+					$collection_response = 0;
+					$artisan_response = 0;
 					
-					$image_result = $this->validate_image($file, $valid_types, $required_size, $image_path);
-					if ($image_result == "TRUE") {
-						// now let's save this to our database
-						$product_data = array(
-							'date_created' => date('Y-m-d H:i:s')
-						);
+					$prod_data = array(
+						'product_name'			=> $this->input->post('product_name'),
+						'product_description'	=> $this->input->post('prod_desc'),
+						'product_quantity'		=> $this->input->post('product_quantity'),
+						'width'							=> $this->input->post('product_width'),
+						'height'							=> $this->input->post('product_height'),
+						'length'							=> $this->input->post('product_length'),
+						'weight'						=> $this->input->post('product_weight'),
+						'price'							=> $this->input->post('product_price'),
+						'date_created'				=> date('Y-m-d H:i:s')
+					);
+					$product_id = $this->mod_product->add($prod_data);
+					
+					$theme = $this->input->post('theme_name');
+					$theme_cnt = count($theme);
+					
+					for($i = 0; $i < $theme_cnt; ++$i){
+						$collection_response += $this->mod_collection->add_product(array('collection_id' => $theme[$i], 'product_id' => $product_id));
+					}
+					
+					$artisan = $this->input->post('artisan_name');
+					$artisan_cnt = count($artisan);
+					
+					for($i = 0; $i < $artisan_cnt; ++$i){
+						$artisan_response += $this->mod_artisan->add_product(array('artisan_id' => $artisan[$i], 'product_id' => $product_id));
+					}
+					
+					if($product_id && $collection_response && $artisan_response){
+						$upload = (object)$this->upload_image($product_id);
 						
-						$error_message = 'Product Error : Please try again later';
-						$product_id = $this->mod_product->add($product_data);
-						if($product_id) {
-							$variant_data = array(
-								'variant_name' => $this->input->post('product_name'),
-								'variant_description' => $this->input->post('prod_desc'),
-								'product_image' => $filename,
-								'length' => $this->input->post('product_length'),
-								'weight' => $this->input->post('product_weight'),
-								'height' => $this->input->post('product_height'),
-								'price' => $this->input->post('product_price'),
-								'color' => $this->input->post('product_color'),
-								'quantity' => $this->input->post('product_quantity'),
-								'product_id' => $product_id,
-								'variant_status' => 0,
-								'date_created' => date('Y-m-d H:i:s')
-							);
+						if($upload->status){
+							$add_image = $this->mod_product->add_photo(array('product_image' => $upload->response->file_name, 'product_id' => $product_id, 'is_primary' => 1));
 							
-							$variant_id = $this->mod_product->add_variant($variant_data);							
-							if($variant_id){
-								$error_message = "";
-								$success_message = "A new product is created";
+							if($add_image){
+								$pagedata['response'] = '<div class="alert alert-success">Product Added!</div>';
+							}
+							else{
+								$pagedata['response'] = '<div class="alert alert-error">Failed to Add Image</div>';
 							}
 						}
+						else{
+							$pagedata['response'] = $upload->response;
+						}
 					}
-					else {
-						$error_message = $image_result;
-					}					
-				}				
-				$pagedata['success'] = $success_message;
-				$pagedata['error'] = $error_message;
+					else{
+						$pagedata['response'] = '<div class="alert alert-danger">Failed to create product, Please contact the Administrator for assistance.</div>';
+					}
+				} // form validation
 			}
+			
+			$pagedata['collections'] = $this->mod_collection->get_all();
+            $pagedata['artisans'] = $this->mod_artisan->get_artisans(NULL, NULL, "artisan_name", "asc");
 			
 			$contentdata['page'] = $this->load->view('page/add_product', $pagedata, TRUE);
 			$this->templateLoader($contentdata);
@@ -286,6 +250,23 @@ class Product extends MY_Controller{
             $this->load->view('page/login');
         }
     }
+		
+	private function upload_image($id){
+		$config['file_name'] = $id.'_'.date('YmdHis');
+		$config['upload_path'] = $this->config->item('product_upload_path');
+		$config['allowed_types'] = 'gif|jpg|pjpeg|jpeg|png|x-png';
+		$config['max_size']	= '1024';
+		$config['max_width']  = '1024';
+		$config['max_height']  = '768';
+		
+		$this->load->library('upload', $config);
+		
+		if($this->upload->do_upload('product_image')){
+			return array('status' => TRUE, 'response' => (object)$this->upload->data());
+		}
+		
+		return array('status' => FALSE, 'response' => $this->upload->display_errors('<div class="alert alert-danger">', '</div>'));
+	}
 	
 	public function get_product(){
 		if(!$this->input->is_ajax_request()) redirect(site_url('404_override'));

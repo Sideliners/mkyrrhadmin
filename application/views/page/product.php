@@ -59,7 +59,7 @@
                     <dt>SKU</dt>
                     <dd><?=$product->product_quantity;?></dd>                        
                     <dt>Last modified</dt>
-                    <dd><?php echo date('M j, Y g:i A', strtotime($product->last_modified));?></dd>
+                    <dd><?php echo date('M j, Y g:i A', strtotime($product->product_last_modified));?></dd>
                 </dl>
             </div>
     		
@@ -90,6 +90,24 @@
                 <h4 class="article-title no-margin-top"><a href="<?=site_url('article/'.$article->article_id);?>"><?=$article->article_title;?></a> <small><em>by <?=$article->firstname.' '.$article->lastname;?></em></small></h4>
                 <?php else: ?>
                 <p class="alert alert-warning">No Article for this product.</p>
+                <?php endif; ?>
+            </div>
+            
+            
+            <br />
+            <h5 class="border-bottom">
+             	In Collections 
+                <small></small>
+            </h5>
+            <div id="prod_article">
+                <?php if(!empty($collections)): ?>
+                    <ul class="">
+                    	<?php foreach($collections as $collection): ?>
+                        <li><?=$collection->collection_name;?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php else: ?>
+                <p class="alert alert-warning">Not in any Collection.</p>
                 <?php endif; ?>
             </div>
             

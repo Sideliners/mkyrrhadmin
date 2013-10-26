@@ -3,7 +3,6 @@
 class Mod_product extends CI_Model{
 
     private $product = 'product';
-	private $collection_prod = 'collection_product';
     private $product_album = 'product_album';
 	private $artisan = 'artisan';
 	private $artisan_product = 'artisan_product';
@@ -11,16 +10,39 @@ class Mod_product extends CI_Model{
 	private $enterprise = 'enterprise';
 	private $enterprise_artisan = 'enterprise_artisan';
 	private $collection = 'collection';
+	private $collection_prod = 'collection_product';
 
+    function getProducts($limit, $start){		
+		$this->db->cache_off();
+		
+        $this->db->select("*");
+		$this->db->from($this->product);
+		$this->db->join($this->product_album, "{$this->product_album}.product_id = {$this->product}.product_id", 'right');
+		
+		$this->db->where("{$this->product_album}.is_primary", 1);
+
+		$this->db->order_by("{$this->product}.date_created",'desc');
+		$this->db->limit($limit, $start);
+
+		$query = $this->db->get();
+
+        if($query->num_rows() > 0){
+            return $query->result();
+        }
+
+        return FALSE;
+    }
+	
     function get_total(){
 		$this->db->cache_off();
 		
         $this->db->select('*');
-        $this->db->from($this->product);
-        //$this->db->join($this->article, "{$this->article}.article_id = {$this->product}.article_id", 'left');
-        //$this->db->join($this->collection, "{$this->collection}.collection_id = {$this->article}.collection_id", 'left');
-
-		$this->db->order_by("{$this->product}.date_created",'desc');
+        $this->db->from($this->collection_prod);
+		$this->db->join($this->product, "{$this->product}.product_id = {$this->collection_prod}.product_id", 'left');
+		$this->db->join($this->product_album, "{$this->product_album}.product_id = {$this->product}.product_id", 'left');
+		$this->db->join($this->collection, "{$this->collection}.collection_id = {$this->collection_prod}.collection_id", 'left');
+		
+		$this->db->where("{$this->product_album}.is_primary", 1);
 
 		$query = $this->db->get();
 		
@@ -35,10 +57,13 @@ class Mod_product extends CI_Model{
 		$this->db->cache_off();
 		
 		$this->db->select('*');
-		$this->db->from($this->product);
-		//$this->db->join($this->article, "{$this->article}.article_id = {$this->product}.article_id", 'left');
-        //$this->db->join($this->collection, "{$this->collection}.collection_id = {$this->article}.collection_id", 'left');
-		$this->db->where("product_id", $id);
+		$this->db->from($this->collection_prod);
+		$this->db->join($this->product, "{$this->product}.product_id = {$this->collection_prod}.product_id", 'left');
+		$this->db->join($this->product_album, "{$this->product_album}.product_id = {$this->product}.product_id", 'left');
+		$this->db->join($this->collection, "{$this->collection}.collection_id = {$this->collection_prod}.collection_id", 'left');
+		
+		$this->db->where("{$this->product_album}.is_primary", 1);
+		$this->db->where("{$this->product}.product_id", $id);
 		
 		$query = $this->db->get();
 		
@@ -79,7 +104,7 @@ class Mod_product extends CI_Model{
 	}
 
 	function update_prod($data, $pid){
-        $data['last_modified'] = date('Y-m-d H:i:s');
+        $data['product_last_modified'] = date('Y-m-d H:i:s');
 		
 		$this->db->where('product_id', $pid);
 		$query = $this->db->update($this->product, $data);
@@ -89,29 +114,17 @@ class Mod_product extends CI_Model{
 		return FALSE;
 	}
 	
-    function getProducts($limit, $start){		
-		$this->db->cache_off();
+	function update_primary_image($data, $pid){
+		$this->db->where('product_id', $pid);
+		$this->db->where('is_primary', 1);
 		
-        $this->db->select('*');
-        $this->db->from($this->collection_prod);
-		$this->db->join($this->product, "{$this->product}.product_id = {$this->collection_prod}.product_id", 'left');
-		$this->db->join($this->product_album, "{$this->product_album}.product_id = {$this->product}.product_id", 'left');
-		$this->db->join($this->collection, "{$this->collection}.collection_id = {$this->collection_prod}.collection_id", 'left');
+		$query = $this->db->update($this->product_album, $data);
 		
-		$this->db->where("{$this->product_album}.is_primary", 1);
+		if($query) return $this->db->affected_rows();
+		
+		return FALSE;
+	}
 
-		$this->db->order_by("{$this->product}.date_created",'desc');
-		$this->db->limit($limit, $start);
-
-		$query = $this->db->get();
-
-        if($query->num_rows() > 0){
-            return $query->result();
-        }
-
-        return FALSE;
-    }
-	
     function search_products($limit, $start, $str){
 		$this->db->cache_off();
 		
@@ -160,6 +173,19 @@ class Mod_product extends CI_Model{
 		$this->db->insert($this->product_album, $data);
 		
 		return $this->db->insert_id();
+	}
+	
+	function get_collection($product_id){
+		$this->db->cache_off();
+		
+		$this->db->select('*');
+		$this->db->from($this->collection_prod);
+		$this->db->join($this->collection, "{$this->collection}.collection_id = {$this->collection_prod}.collection_id");
+		$this->db->where("{$this->collection_prod}.product_id", $product_id);
+		
+		$query = $this->db->get();
+		
+		return $query->result();
 	}
 
     // old

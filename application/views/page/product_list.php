@@ -36,8 +36,7 @@
                         </th>
                         <th>Image</th>
                         <th>Product</th>
-                        <th>In Collection</th>
-                        <th>Prices</th>
+                        <th>Price</th>
                         <th>Stocks</th>
                         <th>Status</th>
                         <th>Actions</th>
@@ -52,9 +51,8 @@
                                     <span class="lbl"></span>
                                 </center>
                             </td>
-                            <td><center><img src="<?=$this->config->item('product_upload_url').$product->product_image;?>" class="thumb" alt="<?=$product->product_image;?>"/></center></td>
+                            <td><center><img src="<?=base_url('uploads/images/products/'.$product->product_image);?>" class="thumb" alt="<?=$product->product_image;?>"/></center></td>
                             <td><a href="<?=site_url('product/'.$product->product_id)?>"><?=$product->product_name;?></a></td>
-                            <td><?php echo ($product->article_id != 0)? $product->collection_name : '<span class="muted">N / A</span>'; ?></td>
                             <td><?=number_format($product->price, 2);?></td>
                             <td><?php echo ($product->product_quantity > 0)? $product->product_quantity : '<span class="muted">N / A</span>';?></td>
                             <td><?php echo ($product->product_status != 0)? '<span class="text-success">published</span>' : '<span class="muted">unpublished</span>'; ?></td>

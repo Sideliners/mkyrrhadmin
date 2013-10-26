@@ -25,18 +25,23 @@ $config = array(
             'rules' => 'required|trim|xss_clean'
         ),
         array(
-            'field' => 'theme_name',
+            'field' => 'theme_name[]',
             'label' => 'Theme',
-            'rules' => 'required|time|css_clean'
+            'rules' => 'required|trim|xss_clean'
         ),
 		array(
-            'field' => 'artisan_name',
+            'field' => 'artisan_name[]',
             'label' => 'Artisan',
-            'rules' => 'required|xss_clean'
+            'rules' => 'required|trim|xss_clean'
         ),
 		array(
             'field' => 'product_length',
             'label' => 'Length',
+            'rules' => 'required|numeric|trim|xss_clean'
+        ),
+		array(
+            'field' => 'product_width',
+            'label' => 'Width',
             'rules' => 'required|numeric|trim|xss_clean'
         ),
 		array(
@@ -69,11 +74,6 @@ $config = array(
         array(
             'field' => 'article_body',
             'label' => 'Article Body',
-            'rules' => 'required|trim|xss_clean'
-        ),
-        array(
-            'field' => 'collection',
-            'label' => 'Collection',
             'rules' => 'required|trim|xss_clean'
         ),
     ), // create_article

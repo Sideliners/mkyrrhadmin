@@ -136,4 +136,13 @@ class Mod_artisan extends CI_Model{
         return $this->db->affected_rows();
     }
 
+	function add_product($data){
+		$data['date_added'] = date('Y-m-d H:i:s');
+		
+		$insert = $this->db->insert($this->artisan_product, $data);
+		
+		if($insert) return 1;
+		
+		return 0;
+	}
 }

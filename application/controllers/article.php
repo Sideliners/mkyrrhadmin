@@ -65,7 +65,6 @@ class Article extends MY_Controller{
                                 'article_body' => $this->input->post('article_body'),
                                 'article_type_id' => 1,
                                 'user_id' => $this->_user->user_id,
-                                'collection_id' => $this->input->post('collection')
                             );
                             
                             $article_id = $this->mod_article->create_article($article_data, $prod_id);
