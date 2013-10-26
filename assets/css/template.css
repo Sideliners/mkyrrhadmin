@@ -1,0 +1,84 @@
+body:before{
+    background-color: #F5F5F5 !important;
+}
+
+body{
+    font-size: 12px !important;
+    padding-top: 40px;
+    line-height: 20px !important;
+}
+
+input[type=text]{ padding: 4px !important; }
+
+.navbar{ min-height: 40px !important; }
+.navbar .navbar-inner{ min-height: 40px !important; }
+.logo{ margin: 0 auto !important; }
+
+/* Floating side menu */
+.bs-docs-sidenav {
+    background-color: #F5F5F5 !important;
+    border-radius: 6px 6px 6px 6px;
+    margin: 30px 0 0;
+    padding: 0;
+    width: 228px;
+}
+/* Floating side menu */
+
+.no-padding{ padding: 0 !important; }
+.padding-vertical{ padding: 8px 0 !important; }
+
+.no-margin{ margin: 0 !important; }
+.margin-top{ margin: 8px 0 0 0 !important; }
+    .no-margin-top{ margin-top: 0 !important; }
+.margin-right{ margin: 0 8px 0 0 !important; }
+    .no-margin-right{ margin-right: 0 !important; }
+.margin-bottom{ margin: 0 0 8px 0 !important; }
+    .no-margin-bottom{ margin-bottom: 0 !important; }
+.margin-left{ margin: 0 0 0 8px !important; }
+    .no-margin-left{ margin-left: 0 !important; }
+
+.margin-sides{ margin: 0 8px !important; }
+
+img.thumb{ max-width: 65px !important; }
+
+.page-header{ background-color: #F5F5F5 !important; }
+
+.nav-list > li > a{ height: 40px !important; }
+
+.main-content{
+	margin-left: 229px !important;
+	border-left: 1px solid #CCCCCC !important;
+} 
+
+.select2-container .select2-choice{
+    border-radius: 0 !important;
+    height: 30px !important;
+}
+
+.border-bottom{
+	border-bottom: 1px solid #CCCCCC !important;
+}
+
+.label { 
+	height: 17px !important;
+	padding: 2px 5px 1px !important;
+}
+.label-purple, .label-pink, .label-success, .label-danger{ height: 21px !important; }
+
+/*.login-layout{ background-color: #F5F5F5 !important; }*/
+
+.article_checkbox{
+    position: absolute;
+    margin-left: 4px;
+}
+
+div.center-cropped {
+    width: 150px;
+    height: 150px;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+div.artisan-listing{ min-width: 100% !important; }
+
+.album-li{ margin-left: 20px !important; }
