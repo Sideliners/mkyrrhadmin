@@ -3,6 +3,7 @@
 class Mod_product extends CI_Model{
 
     private $product = 'product';
+	private $collection_prod = 'collection_product';
     private $product_album = 'product_album';
 	private $artisan = 'artisan';
 	private $artisan_product = 'artisan_product';
@@ -16,8 +17,8 @@ class Mod_product extends CI_Model{
 		
         $this->db->select('*');
         $this->db->from($this->product);
-        $this->db->join($this->article, "{$this->article}.article_id = {$this->product}.article_id", 'left');
-        $this->db->join($this->collection, "{$this->collection}.collection_id = {$this->article}.collection_id", 'left');
+        //$this->db->join($this->article, "{$this->article}.article_id = {$this->product}.article_id", 'left');
+        //$this->db->join($this->collection, "{$this->collection}.collection_id = {$this->article}.collection_id", 'left');
 
 		$this->db->order_by("{$this->product}.date_created",'desc');
 
@@ -92,9 +93,12 @@ class Mod_product extends CI_Model{
 		$this->db->cache_off();
 		
         $this->db->select('*');
-        $this->db->from($this->product);
-        $this->db->join($this->article, "{$this->article}.article_id = {$this->product}.article_id", 'left');
-        $this->db->join($this->collection, "{$this->collection}.collection_id = {$this->article}.collection_id", 'left');
+        $this->db->from($this->collection_prod);
+		$this->db->join($this->product, "{$this->product}.product_id = {$this->collection_prod}.product_id", 'left');
+		$this->db->join($this->product_album, "{$this->product_album}.product_id = {$this->product}.product_id", 'left');
+		$this->db->join($this->collection, "{$this->collection}.collection_id = {$this->collection_prod}.collection_id", 'left');
+		
+		$this->db->where("{$this->product_album}.is_primary", 1);
 
 		$this->db->order_by("{$this->product}.date_created",'desc');
 		$this->db->limit($limit, $start);
@@ -113,8 +117,8 @@ class Mod_product extends CI_Model{
 		
         $this->db->select('*');
         $this->db->from($this->product);
-        $this->db->join($this->article, "{$this->article}.article_id = {$this->product}.article_id", 'left');
-        $this->db->join($this->collection, "{$this->collection}.collection_id = {$this->article}.collection_id", 'left');
+        //$this->db->join($this->article, "{$this->article}.article_id = {$this->product}.article_id", 'left');
+        //$this->db->join($this->collection, "{$this->collection}.collection_id = {$this->article}.collection_id", 'left');
 
         $this->db->like("{$this->product}.product_name", $str);
 
@@ -133,8 +137,8 @@ class Mod_product extends CI_Model{
     function get_total_search($str){
         $this->db->select('*');
         $this->db->from($this->product);
-        $this->db->join($this->article, "{$this->article}.article_id = {$this->product}.article_id", 'left');
-        $this->db->join($this->collection, "{$this->collection}.collection_id = {$this->article}.collection_id", 'left');
+        //$this->db->join($this->article, "{$this->article}.article_id = {$this->product}.article_id", 'left');
+        //$this->db->join($this->collection, "{$this->collection}.collection_id = {$this->article}.collection_id", 'left');
         $this->db->like("{$this->product}.product_name", $str);
 
 		$query = $this->db->get();
