@@ -64,8 +64,8 @@
         </div>
     <!-- <div class="footer">footer</div> -->
     </div>
-    <?=$scripts;?>
     <?=(isset($global_modal))? $global_modal : '' ;?>
     <?=(isset($modal))? $modal : '' ;?>
+    <?=$scripts;?>
 </body>
 </html>

@@ -1,11 +1,7 @@
 <?php if(!empty($artisans)): ?>
-<?php if(isset($success)): ?>
-<div class="alert alert-success"><?=$success;?></div>
-<?php elseif(isset($error)): ?>
-<div class="alert alert-error"><?=$error;?></div>
-<?php elseif(isset($noupdate)): ?>
-<div class="alert alert-info"><?=$noupdate;?></div>
-<?php endif; ?>
+
+<?php echo (isset($response))? $response : ''; ?>
+
 <?php $attr = array('id' => 'artisanlist', 'method' => 'post'); ?>
 <div>
 <?php echo form_open('', $attr); ?>

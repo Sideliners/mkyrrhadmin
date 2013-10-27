@@ -38,7 +38,7 @@ $(function(){
 			$('#edit-artisan-name #artisan_name').focus();
 		}
 		else{
-			$.post(site_url + 'artisans/update', {
+			$.post(site_url + 'artisan/update', {
 				art_id : $(this).attr('data-artisan'),
 				name : $('#edit-artisan-name #artisan_name').val()
 			}, function(data){
@@ -65,7 +65,7 @@ $(function(){
 			$('#edit-artisan-desc #artisan_description').focus();
 		}
 		else{
-			$.post(site_url + 'artisans/update', {
+			$.post(site_url + 'artisan/update', {
 				art_id : $(this).attr('data-artisan'),
 				desc : $('#edit-artisan-desc #artisan_description').val()
 			}, function(data){
@@ -92,7 +92,7 @@ $(function(){
 			$('#edit-artisan-entr #enterprise_id').focus();
 		}
 		else{
-			$.post(site_url + 'artisans/update', {
+			$.post(site_url + 'artisan/update', {
 				art_id : $(this).attr('data-artisan'),
 				entr : $('#edit-artisan-entr #enterprise_id').val()
 			}, function(data){
@@ -125,7 +125,7 @@ $(function(){
 			window.location.reload();
 		}
 		
-		$.post(site_url + 'artisans/delete', {
+		$.post(site_url + 'artisan/delete', {
 			artisan_id : artisan_id
 		}, function(data){
 			if(data.status == 1){

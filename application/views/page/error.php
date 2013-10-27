@@ -1,2 +1,36 @@
-<h1>Sorry</h1>
-<p>But the page you are trying to view is not available.</p>
+<div class="well-small">
+	<h1 class="grey lighter smaller">
+		<span class="blue bigger-125"><i class="icon-sitemap"></i> 404</span>Page Not Found
+	</h1>
+
+	<hr>
+	<h3 class="lighter smaller">We looked everywhere but we couldn't find it!</h3>
+
+<div>
+    <!--<form class="form-search">
+        <span class="input-icon align-middle">
+        <i class="icon-search"></i>
+        
+        <input type="text" placeholder="Give it a search..." class="search-query">
+        </span>
+        <button onclick="return false;" class="btn btn-sm">Go!</button>
+    </form>-->
+    
+    <div class="space"></div>
+    <h4 class="smaller">Try one of the following:</h4>
+    
+    <ul class="list-unstyled spaced unstyled bigger-110 margin-15">
+        <li><i class="icon-hand-right blue"></i>Re-check the url for typos</li>
+        <li><i class="icon-hand-right blue"></i>Read the faq</li>
+        <li><i class="icon-hand-right blue"></i>Tell us about it</li>
+    </ul>
+</div>
+
+<hr>
+<div class="space"></div>
+
+<!--<div class="center">
+    <a class="btn btn-grey" href="#"><i class="icon-arrow-left"></i>Go Back</a>
+    <a class="btn btn-primary" href="#"><i class="icon-dashboard"></i>Dashboard</a>
+</div>-->
+</div>

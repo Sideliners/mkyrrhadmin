@@ -89,7 +89,7 @@ $config = array(
             'rules' => 'required|trim|xss_clean'
 		),
 		array(
-            'field' => 'enterprise_id',
+            'field' => 'enterprise[]',
             'label' => 'Artisan\'s Enterprise',
             'rules' => 'required|trim|xss_clean'
 		),
@@ -106,4 +106,11 @@ $config = array(
             'rules' => 'required|trim|xss_clean'
 		),//create_enterprise
 	),
+	'add_artisan_product' => array(
+		array(
+			'field' => 'product_list[]',
+            'label' => 'Product',
+            'rules' => 'required|trim|xss_clean'
+		)
+	)
 );

@@ -60,6 +60,8 @@ $route['article/([0-9]+)'] = 'article/view/$1';
 $route['artisan/listings/([0-9]+)'] = 'artisan/listings/$1';
 $route['artisan/details/([0-9]+)'] = 'artisan/details/$1';
 
+$route['enterprise/details/([0-9]+)'] = 'enterprise/index/$1';
+
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

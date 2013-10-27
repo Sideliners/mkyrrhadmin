@@ -141,8 +141,55 @@ class Mod_artisan extends CI_Model{
 		
 		$insert = $this->db->insert($this->artisan_product, $data);
 		
-		if($insert) return 1;
+		if($insert) return $this->db->insert_id();;
 		
-		return 0;
+		return FALSE;
+	}
+	
+	function update_artisan($data, $id){
+		$data['last_modified'] = date('Y-m-d H:i:s');
+		
+		$this->db->where('artisan_id', $id);
+		$update = $this->db->update($this->artisan, $data);
+		
+		if($update) return TRUE;
+		
+		return FALSE;
+	}
+	
+	function set_primary_photo($data, $artisan_id, $photo_id){
+		if($this->revert_photos($artisan_id)){
+			$this->db->where('artisan_album_id', $photo_id);
+			$this->db->where('artisan_id', $artisan_id);
+			
+			$update = $this->db->update($this->artisan_album, $data);
+			
+			if($update){
+				return TRUE;
+			}
+			else{
+				return FALSE;
+			}
+		}
+		else{
+			return FALSE;
+		}
+	}
+	
+	private function revert_photos($artisan_id){
+		$this->db->where('artisan_id', $artisan_id);
+		$revert = $this->db->update($this->artisan_album, array('is_primary' => 0));
+		
+		if($revert) return TRUE;
+		
+		return FALSE;
+	}
+	
+	function add_enterprise($data){
+		$data['date_added'] = date('Y-m-d H:i:s');
+		
+		$this->db->insert($this->enterprise_artisan, $data);
+		
+		return $this->db->insert_id();
 	}
 }

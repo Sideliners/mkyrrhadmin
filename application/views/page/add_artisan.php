@@ -1,8 +1,4 @@
-<?php if(isset($error)): ?>
-<div class="alert alert-error"><?=$error;?></div>
-<?php elseif(isset($success)): ?>
-<div class="alert alert-success"><?=$success;?></div>
-<?php endif; ?>
+<?php echo (isset($response))? $response : ''; ?>
 
 <?=form_open_multipart('', array('method' => 'post', 'role' => 'form')); ?>
 <div class="clearfix">
@@ -31,9 +27,9 @@
         <div>
             <label for="category_name">Enterprise</label>
             <div>
-                <select id="enterprise_id" name="enterprise_id[]" class="input-xxlarge chosen-select tag-input-style" multiple="" style="display: none;" data-placeholder="Choose Enterprise...">
+                <select id="enterprise_id" name="enterprise[]" class="input-xxlarge chosen-select tag-input-style" multiple="" style="display: none;" data-placeholder="Choose Enterprise...">
 					<?php foreach($enterprises as $ent): ?>
-                    <option value="<?=$ent->enterprise_id;?>" <?php echo set_select('enterprise_id', $ent->enterprise_id);?>><?=$ent->enterprise_name;?></option>
+                    <option value="<?=$ent->enterprise_id;?>" <?php echo set_select('enterprise[]', $ent->enterprise_id);?>><?=$ent->enterprise_name;?></option>
                     <?php endforeach; ?>
                 </select>
             </div>

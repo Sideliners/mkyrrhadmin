@@ -15,16 +15,18 @@
 <div class="clearfix row-fluid">
 	<div class="span3" id="thumbnail">
     	<div class="thumbnail">
+        	<?php if(!empty($photo->artisan_image)): ?>
         	<img src="<?=base_url('uploads/images/artisans/'.$photo->artisan_image);?>" />
+            <?php endif; ?>
             <div class="caption text-center">Primary Image</div>
          </div>
     </div>
     
     <div class="span9 well well-small" id="description">
     	<h5 class="border-bottom">
-        	Artisan Name <small><a href="#edit-artisan-name" class="pull-right btn-link" data-toggle="modal"><i class="icon-edit"></i> Change name</a></small>
+        	Artisan Name <small><a href="#edit-artisan-name" class="pull-right btn-link" data-toggle="modal" role="button"><i class="icon-edit"></i> Change name</a></small>
         </h5>
-		<div class="margin-bottom" id="artisan_name"><?=$artisan->artisan_name;?></div>
+		<div class="margin-bottom" id="artisan_name"><h3><?=$artisan->artisan_name;?></h3></div>
         <br />
         <h5 class="border-bottom">
             About the Artisan <small><a href="#edit-artisan-desc" class="pull-right btn-link" data-toggle="modal"><i class="icon-edit"></i> Edit</a></small>
@@ -33,7 +35,7 @@
         
         <br />
         <h5 class="border-bottom">
-           Enterprise <small><a href="#edit-artisan-entr" class="pull-right btn-link" data-toggle="modal"><i class="icon-edit"></i> Edit</a></small>
+           Enterprise <small><a href="#edit-artisan-entr" class="pull-right btn-link" data-toggle="modal" role="button"><i class="icon-edit"></i> Edit</a></small>
         </h5>
         <div class="margin-bottom" id="art_entr">
         	<?php if($enterprises): ?>
@@ -50,6 +52,7 @@
         <br />
         <h5 class="border-bottom">
            Products
+           <small><a href="#add-product-modal" class="pull-right btn-link" data-toggle="modal" role="button"><i class="icon-edit"></i> Add product</a></small>
         </h5>
         <div class="margin-bottom" id="art_prod">
 			<div class="row-fluid">      

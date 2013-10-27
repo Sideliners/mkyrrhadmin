@@ -63,30 +63,6 @@
     </div>
 </div>
 
-<!-- image -->
-<div id="upload_prod_image" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">Upload image</h3>
-    </div>
-    <?=form_open_multipart('', array('method' => 'post', 'class' => 'no-margin'));?>
-    <div class="modal-body">
-        <div class="clearfix" style="min-height: 200px;">
-            <div class="ace-file-input clearfix">
-                <input type="file" id="product_image" class="product_image" name="product_image" accept="image/*" />
-            </div>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <div class="pull-left">
-            <div id="save-msg"></div>
-        </div>
-        <button type="button" class="btn btn-mini" data-dismiss="modal" aria-hidden="true">Close</button>
-        <button type="submit" id="save_prod_image" name="save_prod_image" class="btn btn-primary btn-mini">Save</button>
-    </div>
-    <?=form_close();?>
-</div>
-
 <!-- update status -->
 <div id="status-modal" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
@@ -147,7 +123,13 @@
     </div>
     <?=form_open_multipart('', array('method' => 'post', 'class' => 'no-margin'));?>
     <div class="modal-body">
-    	<div class="clearfix" style="min-height: 200px;">
+    	<div class="margin-bottom">
+            <label for="is_primary">
+                <input type="checkbox" id="is_primary" name="is_primary" value="1" class="ace" />
+                <span class="lbl">&nbsp;Primary Image</span>
+             </label>
+        </div>
+    	<div class="clearfix margin-top" style="min-height: 200px;">
         	<div class="ace-file-input clearfix">
                 <input type="file" id="product_album_image" class="product_image" name="product_image" accept="image/*" />
             </div>

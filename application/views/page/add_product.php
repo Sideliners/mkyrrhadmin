@@ -28,7 +28,7 @@
                 <div>
                     <select id="theme_name" name="theme_name[]" multiple="multiple" data-placeholder="Choose collection" class="input-xxlarge chosen-select tag-input-style" required>
                     	<?php foreach($collections as $collection): ?>
-                        <option value="<?=$collection->collection_id?>" <?php echo set_select('theme_name[]', $collection->collection_id);?>><?=$collection->collection_name;?></option>
+                        <option value="<?=$collection->collection_id;?>" <?php echo set_select('theme_name[]', $collection->collection_id);?>><?=$collection->collection_name;?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -102,7 +102,7 @@
     <div class="span9">
     	<div class="clearfix">
         	<div class="pull-left span4">
-            	<input type="file" accept="image/*" name="product_image" id="product_image" />
+            	<input type="file" accept="image/*" name="product_image" id="product_image" class="product_image single" />
             </div>
         </div>
     </div>

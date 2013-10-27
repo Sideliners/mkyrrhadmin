@@ -30,7 +30,7 @@
         <div class="span3" id="thumbnail">
             <div class="thumbnail">
                 <img src="<?=base_url('uploads/images/products/'.$product->product_image);?>" />
-                <div class="caption text-center"><a href="#upload_prod_image" role="button" data-toggle="modal"><?php if($product->product_image): ?>change<?php else: ?>upload<?php endif; ?> image</a></div>
+                <div class="caption text-center">Primary Photo</div>
              </div>
         </div>
 

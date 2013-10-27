@@ -17,34 +17,18 @@ class Product extends MY_Controller{
 			
 			$product_id = intval($this->uri->segment('2'));			
 			
-			if(isset($_POST['save_prod_image'])){
-				if(is_numeric($product_id)){
-					$upload = (object)$this->upload_image($product_id);
-					
-					if($upload->status){
-						$data = array('product_image' => $upload->response->file_name);
-						
-						if($this->mod_product->update_primary_image($data, $product_id)){
-							$pagedata['response'] = '<div class="alert alert-success">Product image updated</div>';
-						}
-						else{
-							$pagedata['response'] = '<div class="alert alert-error">Failed to update product image</div>';
-						}
-					}
-					else{
-						$pagedata['response'] = $upload->response;
-					}
-				}
-				else{
-					$pagedata['response'] = '<div class="alert alert-error">Invalid parameters</div>';
-				}
-			}
-            else if(isset($_POST['save_album_image'])){
+			if(isset($_POST['save_album_image'])){
 				if(is_numeric($product_id)){
 					$upload = (object)$this->upload_image($product_id);
 
 					if($upload->status){
-						if($this->mod_product->add_photo(array('product_image' => $upload->response->file_name, 'product_id' => $product_id))){
+						$photo_id = $this->mod_product->add_photo(array('product_image' => $upload->response->file_name, 'product_id' => $product_id));
+						
+						if($this->input->post('is_primary')){
+							$make_primary = $this->mod_product->set_primary_photo(array('is_primary' => 1), $product_id, $photo_id);
+						}
+						
+						if($photo_id){
 							$pagedata['response'] = '<div class="alert alert-success">Product image updated</div>';
 						}
 						else{
@@ -184,7 +168,7 @@ class Product extends MY_Controller{
 			
 			if (isset($_POST['save_product'])) {
 				if ($this->form_validation->run('create_product') == FALSE) {
-					$error_message = validation_errors('<div class="alert alert-danger">', '</div>');
+					$error_message = validation_errors('<div class="alert alert-error">', '</div>');
 				}
 				else {
 					$collection_response = 0;
@@ -235,7 +219,7 @@ class Product extends MY_Controller{
 						}
 					}
 					else{
-						$pagedata['response'] = '<div class="alert alert-danger">Failed to create product, Please contact the Administrator for assistance.</div>';
+						$pagedata['response'] = '<div class="alert alert-error">Failed to create product, Please contact the Administrator for assistance.</div>';
 					}
 				} // form validation
 			}
@@ -265,7 +249,7 @@ class Product extends MY_Controller{
 			return array('status' => TRUE, 'response' => (object)$this->upload->data());
 		}
 		
-		return array('status' => FALSE, 'response' => $this->upload->display_errors('<div class="alert alert-danger">', '</div>'));
+		return array('status' => FALSE, 'response' => $this->upload->display_errors('<div class="alert alert-error">', '</div>'));
 	}
 	
 	public function get_product(){

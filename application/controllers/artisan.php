@@ -27,18 +27,18 @@ class Artisan extends MY_Controller{
                          $batch_update = $this->mod_artisan->batch_update($status, $items);
 
                         if($batch_update > 0){
-                            $pagedata['success'] = 'Artisan(s) updated';
+                            $pagedata['response'] = '<div class="alert alert-success">Artisan(s) updated</div>';
                         }
                         else{
-                            $pagedata['success'] = 'No changes made';
+                            $pagedata['response'] = '<div class="alert alert-info">No changes made</div>';
                         }
                     }
                     else{
-                        $pagedata['error'] = 'Invalid Parameters';
+                        $pagedata['response'] = '<div class="alert alert-error">Invalid Parameters</div>';
                     }
                 }
                 else{
-                    $pagedata['error'] = 'Invalid Parameters';
+                    $pagedata['response'] = '<div class="alert alert-error">Invalid Parameters</div>';
                 }
             }
 
@@ -80,7 +80,7 @@ class Artisan extends MY_Controller{
 			
 			$data.= '
 				<div class="caption">
-					<h5>'.$row->artisan_name.' <br /><small>('.$status.')</small></h5>
+					<h5><a href="'.site_url('artisan/details/'.$row->artisan_id).'">'.$row->artisan_name.'</a><br /><small>('.$status.')</small></h5>
 					<p>'.substr(strip_tags($row->artisan_description), 0, 150).'..</p>
 					<div><a href="'.site_url('artisan/details/'.$row->artisan_id).'" class="label label-lg label-pink arrowed-right"><i class="icon-edit"></i> Details</span></a>
 				</div>
@@ -98,8 +98,8 @@ class Artisan extends MY_Controller{
 				$artisan = $this->mod_artisan->get_artisan($artisan_id);
 				
 				if(is_object($artisan)){
-					$contentdata['script'] = array('admin', 'artisans');
-                    $contentdata['styles'] = NULL;
+					$contentdata['script'] = array('admin', 'jquery.inputlimiter.1.3.1.min', 'chosen.jquery.min', 'artisans');
+                    $contentdata['styles'] = array('chosen');
 
 					$pagedata = $this->_page_defaults('Edit Artisan - '. $artisan->artisan_name, 'prod_artisans', 'artisanslist');
 					
@@ -107,9 +107,13 @@ class Artisan extends MY_Controller{
 						$upload = (object)$this->upload_image($artisan_id);
 						
 						if($upload->status === TRUE){
-							$add = $this->mod_artisan->add_photo(array('artisan_image' => $upload->response->file_name, 'artisan_id' => $artisan_id));
+							$photo_id = $this->mod_artisan->add_photo(array('artisan_image' => $upload->response->file_name, 'artisan_id' => $artisan_id));
 							
-							if($add > 0){
+							if($this->input->post('is_primary')){
+								$make_primary = $this->mod_artisan->set_primary_photo(array('is_primary' => 1), $artisan_id, $photo_id);
+							}
+							
+							if($photo_id){
 								$pagedata['response'] = '<div class="alert alert-success">A new artisan image was added</div>';
 							}
 							else{
@@ -120,12 +124,29 @@ class Artisan extends MY_Controller{
 							$pagedata['response'] = $upload->response;
 						}
 					}
+					else if(isset($_POST['save_artisan_product'])){
+						$add_response = 0;
+						$products = $this->input->post('product_list');
+						$product_cnt = count($products);
+						
+						for($i = 0; $i < $product_cnt; ++$i){
+							$add_response += $this->mod_artisan->add_product(array('artisan_id' => $artisan_id, 'product_id' => $products[$i]));
+						}
+						
+						if($add_response){
+							$pagedata['response'] = '<div class="alert alert-success">Product(s) was added</div>';
+						}
+						else{
+							$pagedata['response'] = '<div class="alert alert-error">Failed to add product(s)</div>';
+						}
+					}
 					
 					$pagedata['artisan'] = $this->mod_artisan->get_artisan($artisan_id);
 					$pagedata['photo'] = $this->mod_artisan->primary_image($artisan_id);
 					$pagedata['album'] = $this->mod_artisan->get_album($artisan_id);
 					$pagedata['enterprises'] = $this->mod_artisan->get_enterprise($artisan_id);
 					$pagedata['products'] = $this->mod_artisan->get_products($artisan_id);
+					$pagedata['product_list'] = $this->mod_product->getProducts();
 					
 					$contentdata['page'] = $this->load->view('page/artisan', $pagedata, TRUE);
 				}
@@ -173,55 +194,44 @@ class Artisan extends MY_Controller{
 
             if(isset($_POST['save_artisan'])){
 				if($this->form_validation->run('create_artisan') == FALSE){
-					$pagedata['error'] = validation_errors();
+					$pagedata['error'] = validation_errors('<div class="alert alert-error">', '</div>');
 				}
 				else{
-					$filename = basename($_FILES['artisan_image']['name']);
-					$tempname = $_FILES['artisan_image']['tmp_name'];
-					$filetype = $_FILES['artisan_image']['type'];
-					$filesize = ($_FILES['artisan_image']['size'] / 1024);
-					$uploadError = $_FILES['artisan_image']['error'];
+					$entr_response = 0;
 					
-					$req_size = 4096; // kilobytes
-					$type = explode("/", $filetype);
+					$artisan_data = array(
+						'artisan_name' => $this->input->post('artisan_name'),
+						'artisan_description' => $this->input->post('artisan_description')
+					);
 					
-					$path = $this->config->item('artisans_upload_path');
+					$enterprise = $this->input->post('enterprise');
+					$enterprise_cnt = count($enterprise);
 					
-					$filetypes = $this->config->item('filetypes');
+					$artisan_id = $this->mod_artisan->add_artisan($artisan_data);
 					
-					if(is_numeric($this->input->post('enterprise_id'))){
-						if($uploadError == 0){
-							if(in_array($filetype, $filetypes) && $filesize <= $req_size){
-								$newfilename = date('YmdHis').'.'.$type[1];
-								
-								if(move_uploaded_file($tempname, $path.$newfilename)){
-									unset($_POST['save_artisan']);
-									$params = $this->input->post();
-									$params['artisan_image'] = mysql_real_escape_string($newfilename);
-									
-									$artisan_id = $this->mod_artisan->add_artisan($params);
-									
-									if($artisan_id){
-										$pagedata['success'] = 'Artisan created';
-									}
-									else{
-										$pagedata['error'] = $artisan_id;
-									}
-								}
-								else{
-									$pagedata['error'] = 'Image Error : Failed to upload image';
-								}
+					for($i = 0; $i < $enterprise_cnt; ++$i){
+						$entr_response += $this->mod_artisan->add_enterprise(array('enterprise_id' => $enterprise[$i], 'artisan_id' => $artisan_id));
+					}
+					
+					if($artisan_id && $entr_response){
+						$upload = (object)$this->upload_image($artisan_id);
+						
+						if($upload->status){
+							$add_image = $this->mod_artisan->add_photo(array('artisan_image ' => $upload->response->file_name, 'artisan_id' => $artisan_id, 'is_primary' => 1));
+							
+							if($add_image){
+								$pagedata['response'] = '<div class="alert alert-success">Artisan Added!</div>';
 							}
 							else{
-								$pagedata['error'] = 'Image Error : Invalid Image';
+								$pagedata['response'] = '<div class="alert alert-error">Failed to Add Image</div>';
 							}
-						} // image error validation
+						}
 						else{
-							$pagedata['error'] = 'Image Error : Select Image for this Artisan';
+							$pagedata['response'] = $upload->response;
 						}
 					}
 					else{
-						redirect(current_url());
+						$pagedata['response'] = '<div class="alert alert-error">Failed to create artisan, Please contact the Administrator for assistance.</div>';
 					}
 				} // form validation
             }

@@ -6,21 +6,92 @@ class Enterprise extends MY_Controller{
         parent::__construct();
     }
 
+	public function index($enterprise_id = NULL){
+		if($this->user->is_logged_in()){			
+			if(!is_null($enterprise_id) && is_numeric($enterprise_id)){
+				$enterprise = $this->mod_enterprise->get_enterprise($enterprise_id);
+				
+				if(is_object($enterprise)){
+					$contentdata['script'] = array('admin', 'enterprises');
+					$contentdata['styles'] = NULL;
+					
+					$pagedata = $this->_page_defaults('Edit Enterprise - '. $enterprise->enterprise_name, 'prod_enterprises', 'enterpriseslist');
+					
+					if(isset($_POST['save_enterprise_image'])){
+						$filename = basename($_FILES['enterprise_image']['name']);
+						$tempname = $_FILES['enterprise_image']['tmp_name'];
+						$filetype = $_FILES['enterprise_image']['type'];
+						$filesize = ($_FILES['enterprise_image']['size'] / 1024);
+						$uploadError = $_FILES['enterprise_image']['error'];
+						
+						$req_size = 4096; // kilobytes
+						$type = explode("/", $filetype);
+						
+						$path = $this->config->item('enterprises_upload_path');
+						
+						$filetypes = $this->config->item('filetypes');
+						
+						if($uploadError == 0){
+							if(in_array($filetype, $filetypes) && $filesize <= $req_size){
+								$newfilename = date('YmdHis').'.'.$type[1];
+								
+								if(move_uploaded_file($tempname, $path.$newfilename)){
+									$update = $this->mod_enterprise->update_enterprise(array('enterprise_image' => $newfilename), $enterprise_id);
+									
+									if($update){
+										$pagedata['success'] = 'Enterprise update';
+									}
+									else{
+										$pagedata['error'] = $update;
+									}
+								}
+								else{
+									$pagedata['error'] = 'Image Error : Failed to upload image';
+								}
+							}
+							else{
+								$pagedata['error'] = 'Image Error : Invalid Image';
+							}
+						}
+						else{
+							$pagedata['error'] = 'Image Error : Select Image for this Enterprise';
+						}
+					}
+					
+					$enterprise = $this->mod_enterprise->get_enterprise($enterprise_id);
+					$enterprise->article = ''; //$this->mod_articles->get_prod_article($enterprise->article_id);
+					$enterprise->artisans = $this->mod_enterprise->get_enterprise_artisans($enterprise->enterprise_id);
+					
+					$pagedata['enterprise'] = $enterprise;
+					
+					$contentdata['page'] = $this->load->view('page/enterprise', $pagedata, TRUE);
+				}
+				else{
+					redirect(site_url('404_override'));
+				}
+			}
+			else{
+				redirect(site_url('404_override'));
+			}
+			
+			$this->templateLoader($contentdata);
+		}
+		else{
+            $this->load->view('page/login');
+        }
+	}
+	
     public function listings(){
-        $contentdata['script'] = array('admin');
-
         if($this->user->is_logged_in()){
+			$contentdata['script'] = array('admin', 'enterprises');
+			$contentdata['styles'] = NULL;
+			
             $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
             $perpage = 10;
             $url = base_url('enterprises/listings');
             $total = $this->mod_enterprise->get_total();
-
-            $pagedata['page_title'] = 'Enterprises';
-            $pagedata['page'] = 'prod_enterprises';
-            $pagedata['sub_page'] = 'enterpriseslist';
-            $pagedata['user'] = $this->_user;
-
-            array_push($contentdata['script'], 'enterprises');
+			
+			$pagedata = $this->_page_defaults('Enterprises', 'prod_enterprises', 'enterpriseslist');
 
 			if(isset($_POST['do_batch_action'])){
                 $items = $this->input->post('enterprise_item');
@@ -49,7 +120,7 @@ class Enterprise extends MY_Controller{
             $pagedata['enterprises'] = $this->mod_enterprise->get_enterprises($perpage, $page);
             $pagedata['pagination'] = $this->paginate($url, $total, $perpage);
 
-            $contentdata['page'] = $this->load->view('page/enterprises_list', $pagedata, TRUE);
+            $contentdata['page'] = $this->load->view('page/enterprise_list', $pagedata, TRUE);
 			$this->templateLoader($contentdata);
         }
         else{
@@ -126,86 +197,7 @@ class Enterprise extends MY_Controller{
             $this->load->view('page/login');
         }
 	}
-	
-	public function details($enterprise_id=NULL){
-		$contentdata['script'] = array('admin');
 
-        if($this->user->is_logged_in()){			
-			if(!is_null($enterprise_id) && is_numeric($enterprise_id)){
-				$enterprise = $this->mod_enterprise->get_enterprise($enterprise_id);
-				
-				if(is_object($enterprise)){					
-					$pagedata['page_title'] = 'Edit Enterprise - '. $enterprise->enterprise_name;
-					$pagedata['page'] = 'prod_enterprises';
-					$pagedata['sub_page'] = 'enterpriseslist';
-					$pagedata['user'] = $this->_user;
-					
-					if(isset($_POST['save_enterprise_image'])){
-						$filename = basename($_FILES['enterprise_image']['name']);
-						$tempname = $_FILES['enterprise_image']['tmp_name'];
-						$filetype = $_FILES['enterprise_image']['type'];
-						$filesize = ($_FILES['enterprise_image']['size'] / 1024);
-						$uploadError = $_FILES['enterprise_image']['error'];
-						
-						$req_size = 4096; // kilobytes
-						$type = explode("/", $filetype);
-						
-						$path = $this->config->item('enterprises_upload_path');
-						
-						$filetypes = $this->config->item('filetypes');
-						
-						if($uploadError == 0){
-							if(in_array($filetype, $filetypes) && $filesize <= $req_size){
-								$newfilename = date('YmdHis').'.'.$type[1];
-								
-								if(move_uploaded_file($tempname, $path.$newfilename)){
-									$update = $this->mod_enterprise->update_enterprise(array('enterprise_image' => $newfilename), $enterprise_id);
-									
-									if($update){
-										$pagedata['success'] = 'Enterprise update';
-									}
-									else{
-										$pagedata['error'] = $update;
-									}
-								}
-								else{
-									$pagedata['error'] = 'Image Error : Failed to upload image';
-								}
-							}
-							else{
-								$pagedata['error'] = 'Image Error : Invalid Image';
-							}
-						}
-						else{
-							$pagedata['error'] = 'Image Error : Select Image for this Enterprise';
-						}
-					}
-					
-					array_push($contentdata['script'], 'enterprises');
-					
-					$enterprise = $this->mod_enterprise->get_enterprise($enterprise_id);
-					$enterprise->article = $this->mod_articles->get_prod_article($enterprise->article_id);
-					$enterprise->artisans = $this->mod_enterprise->get_enterprise_artisans($enterprise->enterprise_id);
-					
-					$pagedata['enterprise'] = $enterprise;
-					
-					$contentdata['page'] = $this->load->view('page/enterprise', $pagedata, TRUE);
-				}
-				else{
-					redirect(site_url('404_override'));
-				}
-			}
-			else{
-				redirect(site_url('404_override'));
-			}
-			
-			$this->templateLoader($contentdata);
-		}
-		else{
-            $this->load->view('page/login');
-        }
-	}
-	
 	public function update(){
 		if(!$this->input->is_ajax_request()) redirect(site_url('404_override'));
 		

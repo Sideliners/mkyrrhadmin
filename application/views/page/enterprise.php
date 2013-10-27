@@ -19,9 +19,9 @@
 <div class="clearfix row-fluid">
 	<div class="span3" id="thumbnail">
     	<div class="thumbnail">
-        	<img src="<?=base_url('uploads/images/enterprises/'.$enterprise->enterprise_image);?>" />
+        	<img src="" />
             <div class="caption text-center">
-            	<a href="#upload_enterprise_image" role="button" data-toggle="modal"><?php if($enterprise->enterprise_image): ?>change<?php else: ?>upload<?php endif; ?> image</a>
+            	<a href="#upload_enterprise_image" role="button" data-toggle="modal">Update image</a>
             </div>
          </div>
     </div>
@@ -44,22 +44,11 @@
         <div class="margin-bottom" id="art_prod">
 			<?php if ($artisans = $enterprise->artisans) : ?>
 			<div class="row-fluid">            
-            <ul>
-            <?php
-				foreach ($artisans as $artisan) {
-					echo '<li>';
-					echo '<a href="' . site_url('artisans/details/'.$artisan->artisan_id) . '" title="{$artisan->artisan_name}" name="{$artisan->artisan_name}">' . $artisan->artisan_name . '</a> ';
-					if ($artisan->artisan_status) {
-						$status = "Published";	
-					}
-					else if ($artisan->artisan_status == 0) {
-						$status = "Unpublished";
-					}
-					echo '<small>('.$status.')</small>';
-					echo '</li>';
-				}
-			?>
-            </ul>
+                <ul>
+                <?php foreach ($artisans as $artisan): ?>
+                    <li><a href="<?=site_url('artisan/details/'.$artisan->artisan_id)?>"><?=$artisan->artisan_name;?></a></li>
+                <?php endforeach; ?>
+                </ul>
 			</div>
 			<?php else: ?>
             <div> No Artisans Available </div>
@@ -69,18 +58,10 @@
         <br />
         <h5 class="border-bottom">
             Enterprise Article 
-            <small>
-                <?php if($enterprise->article && !empty($enterprise->article)): ?>
-                <a href="<?=site_url('articles/update/'.$enterprise->article_id);?>" class="pull-right btn-link"><i class="icon-edit"></i> Edit Enterprise</a>
-                <?php else: ?>
-                <a href="<?=site_url('articles/enterprise/'.$enterprise->enterprise_id.'/create');?>" class="pull-right btn-link"><i class="icon-plus"></i> Create Article</a>
-                <?php endif; ?>
-            </small>
+            <small></small>
         </h5>
         <div id="enterprise_article">
             <?php if($enterprise->article && !empty($enterprise->article)): ?>
-            <h4 class="article-title no-margin-top"><?=$enterprise->article->title;?> <small>by <?=$enterprise->article->firstname.' '.$enterprise->article->lastname;?></small></h4>
-            <div class="article-body"><?=$enterprise->article->body;?></div>
             <?php else: ?>
             <p class="alert alert-warning">No Article for this enterprise.</p>
             <?php endif; ?>

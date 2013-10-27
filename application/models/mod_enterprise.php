@@ -4,6 +4,7 @@ class Mod_enterprise extends CI_Model{
 	
 	private $enterprise = 'enterprise';
 	private $artisan = 'artisan';
+	private $enterprise_artisan = 'enterprise_artisan';
 	
 	function get_all(){
 		$this->db->cache_off();
@@ -53,9 +54,13 @@ class Mod_enterprise extends CI_Model{
 	}	
 	
 	function get_enterprise_artisans($enterprise_id){
-				
-		$this->db->where('enterprise_id', $enterprise_id);
-        $query = $this->db->get($this->artisan);
+		$this->db->select('*');
+		$this->db->from($this->enterprise_artisan);
+		$this->db->join($this->enterprise, "{$this->enterprise}.enterprise_id = {$this->enterprise_artisan}.enterprise_id");
+		$this->db->join($this->artisan, "{$this->artisan}.artisan_id = {$this->enterprise_artisan}.artisan_id");
+		
+		$this->db->where("{$this->enterprise}.enterprise_id", $enterprise_id);
+        $query = $this->db->get();
 		
 		if($query->num_rows() > 0) return $query->result();
 		

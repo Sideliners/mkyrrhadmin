@@ -12,7 +12,7 @@ class Mod_product extends CI_Model{
 	private $collection = 'collection';
 	private $collection_prod = 'collection_product';
 
-    function getProducts($limit, $start){		
+    function getProducts($limit = NULL, $start = NULL){
 		$this->db->cache_off();
 		
         $this->db->select("*");
@@ -22,7 +22,8 @@ class Mod_product extends CI_Model{
 		$this->db->where("{$this->product_album}.is_primary", 1);
 
 		$this->db->order_by("{$this->product}.date_created",'desc');
-		$this->db->limit($limit, $start);
+		
+		if(!is_null($limit) && !is_null($start)) $this->db->limit($limit, $start);
 
 		$query = $this->db->get();
 
@@ -113,17 +114,6 @@ class Mod_product extends CI_Model{
 		
 		return FALSE;
 	}
-	
-	function update_primary_image($data, $pid){
-		$this->db->where('product_id', $pid);
-		$this->db->where('is_primary', 1);
-		
-		$query = $this->db->update($this->product_album, $data);
-		
-		if($query) return $this->db->affected_rows();
-		
-		return FALSE;
-	}
 
     function search_products($limit, $start, $str){
 		$this->db->cache_off();
@@ -186,6 +176,34 @@ class Mod_product extends CI_Model{
 		$query = $this->db->get();
 		
 		return $query->result();
+	}
+	
+	function set_primary_photo($data, $product_id, $photo_id){
+		if($this->revert_photos($product_id)){
+			$this->db->where('product_album_id', $photo_id);
+			$this->db->where('product_id', $product_id);
+			
+			$update = $this->db->update($this->product_album, $data);
+			
+			if($update){
+				return TRUE;
+			}
+			else{
+				return FALSE;
+			}
+		}
+		else{
+			return FALSE;
+		}
+	}
+	
+	private function revert_photos($product_id){
+		$this->db->where('product_id', $product_id);
+		$revert = $this->db->update($this->product_album, array('is_primary' => 0));
+		
+		if($revert) return TRUE;
+		
+		return FALSE;
 	}
 
     // old

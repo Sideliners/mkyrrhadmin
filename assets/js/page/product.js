@@ -1,5 +1,5 @@
 $(function(){
-	$('#product_image').ace_file_input({
+	$('.single').ace_file_input({
 		no_file:'No File ...',
 		btn_choose:'Choose',
 		btn_change:'Change',
@@ -315,5 +315,5 @@ $(function(){
 		}
 	});
 	
-	$('#update_prod_name, #edit_prod_desc, #upload_prod_image, #alert-modal').on('hidden', function(){ window.location = document.URL; });
+	$('#update_prod_name, #edit_prod_desc, #upload_prod_image, #alert-modal, #add-product-modal').on('hidden', function(){ window.location = document.URL; });
 });

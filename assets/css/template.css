@@ -86,3 +86,11 @@ div.artisan-listing{ min-width: 100% !important; }
 
 #limiterBox{ top: 313px; }
 textarea.limited{ resize: none; }
+
+#add-product-modal #product_list_chosen{
+	width: 100% !important;
+}
+
+#add-product-modal .modal-body{
+	height: 200px !important;
+}
