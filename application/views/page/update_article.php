@@ -29,18 +29,6 @@
                 <textarea class="input-block-level" id="article_body" name="article_body"><?php echo (set_value('article_body')) ? set_value('article_body') : $article->article_body; ?></textarea><br />
             </div>
         </div> <!-- title and body -->
-
-        <div>
-            <label>Assign to Collection</label>
-            <div>
-                <select id="theme_name" name="collection" data-placeholder="Choose collection" class="input-xxlarge chosen-select tag-input-style theme_name" required>
-                    <option value=""></option>
-                    <?php foreach($collections as $row): ?>
-                    <option value="<?=$row->collection_id;?>" <?php echo set_select('collection', $row->collection_id);?> <?php echo ($row->collection_id == $article->collection_id)? 'selected="selected"' : '';?>><?=$row->collection_name;?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-        </div>
     </div>
 </div>
 

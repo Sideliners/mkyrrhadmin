@@ -49,11 +49,11 @@ class Article extends MY_Controller{
 
             if(isset($_POST['save_article'])){
                 if($this->form_validation->run('create_article') == FALSE){
-                    $pagedata['response'] = validation_errors('<div class="alert alert-danger">', '</div>');
+                    $pagedata['response'] = validation_errors('<div class="alert alert-error">', '</div>');
                 }
                 else{
                     if(!is_numeric($prod_id)){
-                        $pagedata['response'] = '<div class="alert alert-danger">Invalid Parameters</div>';
+                        $pagedata['response'] = '<div class="alert alert-error">Invalid Parameters</div>';
                     }
                     else{
                         $upload = (object)$this->upload_image($prod_id);
@@ -76,11 +76,11 @@ class Article extends MY_Controller{
                                     $pagedata['response'] = '<div class="alert alert-success">Article Created!</div>';
                                 }
                                 else{
-                                    $pagedata['response'] = '<div class="alert alert-danger>Failed to create Article</div>"';
+                                    $pagedata['response'] = '<div class="alert alert-error>Failed to create Article</div>"';
                                 }
                             }
                             else{
-                                $pagedata['response'] = '<div class="alert alert-danger>Failed to create Article</div>"';
+                                $pagedata['response'] = '<div class="alert alert-error>Failed to create Article</div>"';
                             }
                         }
                         else{
@@ -165,7 +165,7 @@ class Article extends MY_Controller{
 
                     if(isset($_POST['save_article'])){
                         if($this->form_validation->run('create_article') == FALSE){
-                            $pagedata['response'] = validation_errors('<div class="alert alert-danger">', '</div>');
+                            $pagedata['response'] = validation_errors('<div class="alert alert-error">', '</div>');
                         }
                         else{
                             if($_FILES['article_image']['error'] == 0){
@@ -176,7 +176,7 @@ class Article extends MY_Controller{
                                         $pagedata['response'] = '<div class="alert alert-success">Article Updated!</div>';
                                     }
                                     else{
-                                        $pagedata['response'] = '<div class="alert alert-danger">Failed to create Article</div>';
+                                        $pagedata['response'] = '<div class="alert alert-error">Failed to create Article</div>';
                                     }
                                 }
                                 else{
@@ -188,13 +188,12 @@ class Article extends MY_Controller{
                                     $pagedata['response'] = '<div class="alert alert-success">Article Updated!</div>';
                                 }
                                 else{
-                                    $pagedata['response'] = '<div class="alert alert-danger">Failed to create Article</div>';
+                                    $pagedata['response'] = '<div class="alert alert-error">Failed to create Article</div>';
                                 }
                             }
                         }
                     } // POST
 
-                    $pagedata['collections'] = $this->mod_collection->get_all();
                     $pagedata['article'] = $this->mod_article->getArticle($aid);
 
                     $contentdata['page'] = $this->load->view('page/update_article', $pagedata, TRUE);
@@ -215,7 +214,6 @@ class Article extends MY_Controller{
             'article_title' => $this->input->post('article_title'),
             'article_body' => $this->input->post('article_body'),
             'user_id' => $this->_user->user_id,
-            'collection_id' => $this->input->post('collection')
         );
 
         if(!is_null($image)) $article_data['article_image'] = $image;
