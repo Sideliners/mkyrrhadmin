@@ -172,7 +172,7 @@ class Article extends MY_Controller{
                                 $upload = (object)$this->upload_image($prod_id);
 
                                 if($upload->status){
-                                    if($this->do_update($aid, $update->response->file_name)){
+                                    if($this->do_update($aid, $upload->response->file_name)){
                                         $pagedata['response'] = '<div class="alert alert-success">Article Updated!</div>';
                                     }
                                     else{
