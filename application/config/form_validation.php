@@ -94,6 +94,13 @@ $config = array(
             'rules' => 'required|trim|xss_clean'
 		),
 	),//create_artisan
+	'add_artisan_product' => array(
+		array(
+			'field' => 'product_list[]',
+            'label' => 'Product',
+            'rules' => 'required|trim|xss_clean'
+		)
+	),
 	'create_enterprise' => array(
 		array(
             'field' => 'enterprise_name',
@@ -106,11 +113,16 @@ $config = array(
             'rules' => 'required|trim|xss_clean'
 		),//create_enterprise
 	),
-	'add_artisan_product' => array(
+	'batch_update_enterprise' => array(
 		array(
-			'field' => 'product_list[]',
-            'label' => 'Product',
+			'field' => 'batch_actions',
+            'label' => 'Batch Action',
+            'rules' => 'required|numeric|trim|xss_clean'
+		),
+		array(
+			'field' => 'enterprise_item[]',
+            'label' => 'Enterprise',
             'rules' => 'required|trim|xss_clean'
-		)
-	)
+		),
+	),
 );

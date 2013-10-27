@@ -88,7 +88,7 @@ class Enterprise extends MY_Controller{
 			
             $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
             $perpage = 10;
-            $url = base_url('enterprises/listings');
+            $url = base_url('enterprise/listings');
             $total = $this->mod_enterprise->get_total();
 			
 			$pagedata = $this->_page_defaults('Enterprises', 'prod_enterprises', 'enterpriseslist');
@@ -96,25 +96,25 @@ class Enterprise extends MY_Controller{
 			if(isset($_POST['do_batch_action'])){
                 $items = $this->input->post('enterprise_item');
                 $status = $this->input->post('batch_actions');
-
-                if($status != '' && is_numeric($status)){
-                    if(is_array($items)){
+				
+				if($this->form_validation->run('batch_update_enterprise') == FALSE){
+					$pagedata['response'] = validation_errors('<div class="alert alert-error">', '</div>');
+				}
+				else{
+					if(is_array($items)){
                          $batch_update = $this->mod_enterprise->batch_update($status, $items);
 
                         if($batch_update > 0){
-                            $pagedata['success'] = 'Enterprise(s) updated';
+                            $pagedata['response'] = '<div class="alert alert-success">Enterprise(s) updated</div>';
                         }
                         else{
-                            $pagedata['success'] = 'No changes made';
+                            $pagedata['response'] = '<div class="alert alert-info">No changes made</div>';
                         }
                     }
                     else{
-                        $pagedata['error'] = 'Invalid Parameters';
+                        $pagedata['response'] = '<div class="alert alert-error">Invalid Parameters</div>';
                     }
-                }
-                else{
-                    $pagedata['error'] = 'Invalid Parameters';
-                }
+				} // form validation
             }
 
             $pagedata['enterprises'] = $this->mod_enterprise->get_enterprises($perpage, $page);

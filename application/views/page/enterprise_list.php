@@ -1,11 +1,7 @@
 <?php if(!empty($enterprises)): ?>
-<?php if(isset($success)): ?>
-<div class="alert alert-success"><?=$success;?></div>
-<?php elseif(isset($error)): ?>
-<div class="alert alert-error"><?=$error;?></div>
-<?php elseif(isset($noupdate)): ?>
-<div class="alert alert-info"><?=$noupdate;?></div>
-<?php endif; ?>
+
+<?php echo (isset($response))? $response : ''; ?>
+
 <?php $attr = array('id' => 'enterpriselist', 'method' => 'post'); ?>
 <div>
 <?php echo form_open('', $attr); ?>
@@ -14,8 +10,8 @@
             <select name="batch_actions" id="batch_actions">
                 <option value=""></option>
                 <optgroup label="Batch action">
-                    <option value="1">Publish</option>
-                    <option value="0">Unpublish</option>
+                    <option value="1" <?=set_select('batch_actions', '1');?>>Publish</option>
+                    <option value="0" <?=set_select('batch_actions', '0');?>>Unpublish</option>
                 </optgroup>
             </select>
             <button type="submit" class="btn btn-primary btn-mini" name="do_batch_action">Submit</button>            

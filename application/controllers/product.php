@@ -168,7 +168,7 @@ class Product extends MY_Controller{
 			
 			if (isset($_POST['save_product'])) {
 				if ($this->form_validation->run('create_product') == FALSE) {
-					$error_message = validation_errors('<div class="alert alert-error">', '</div>');
+					$pagedata['response'] = validation_errors('<div class="alert alert-error">', '</div>');
 				}
 				else {
 					$collection_response = 0;
