@@ -57,7 +57,7 @@ class Users extends MY_Controller{
     }
 
     public function account_settings(){
-        if(!$this->user->is_logged_in()){ $this->load->view('page/login'); exit; }
+        if(!$this->user->is_logged_in()){ redirect(base_url()); }
 
         $contentdata['script'] = array('admin', 'common');
         $contentdata['styles'] = NULL;
