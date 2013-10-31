@@ -11,6 +11,6 @@
         </dl>
     </div>
     <div>
-        <a href="#" role="button" class="btn btn-info btn-small"><i class="icon-edit"></i> Update Information</a>
+        <a href="#update-account-modal" class="btn btn-info btn-small" role="button" data-toggle="modal"><i class="icon-edit"></i> Update Information</a>
     </div>
 </div>

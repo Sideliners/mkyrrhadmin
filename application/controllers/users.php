@@ -62,7 +62,7 @@ class Users extends MY_Controller{
         $contentdata['script'] = array('admin', 'common');
         $contentdata['styles'] = NULL;
         
-        $pagedata = $this->_page_defaults('Account Settings', 'account', '');
+        $pagedata = $this->_page_defaults('Account Settings', 'account', '', 'account_settings_modal');
 
         $contentdata['page'] = $this->load->view('page/account_settings', $pagedata, TRUE);
         

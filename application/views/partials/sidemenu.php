@@ -25,4 +25,7 @@
             </li>
         </ul>
     </li>
+    <?php if($user->user_type == 1 || $user->user_type == 2): ?>
+    <li><a href="#"><i class="icon-group"></i> Accounts</a></li>
+    <?php endif; ?>
 </ul>
