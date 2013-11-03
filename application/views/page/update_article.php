@@ -40,10 +40,10 @@
                 $url = 'product/'.$this->uri->segment(4);
                 break;
             case 'artisan' :
-                $url = 'artisan/details/'.$this->uri->segment(3);
+                $url = 'artisan/details/'.$this->uri->segment(4);
                 break;
             case 'enterprise' :
-                $url = 'enterprise/details/'.$this->uri->segment(3);
+                $url = 'enterprise/details/'.$this->uri->segment(4);
                 break;
         }
         ?>

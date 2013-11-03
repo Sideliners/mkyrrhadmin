@@ -1,13 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.5
+-- version 4.0.4.1
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Oct 28, 2013 at 09:00 PM
--- Server version: 5.5.33-31.1
--- PHP Version: 5.3.17
+-- Host: 127.0.0.1
+-- Generation Time: Nov 03, 2013 at 07:47 PM
+-- Server version: 5.5.32
+-- PHP Version: 5.4.19
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `mkyrrh_makaya`
 --
+CREATE DATABASE IF NOT EXISTS `mkyrrh_makaya` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+USE `mkyrrh_makaya`;
 
 -- --------------------------------------------------------
 
@@ -38,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `article` (
   `last_modified` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`article_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 -- --------------------------------------------------------
 
@@ -70,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `artisan` (
   PRIMARY KEY (`artisan_id`),
   KEY `article_id` (`article_id`),
   KEY `enterprise_id` (`enterprise_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 -- --------------------------------------------------------
 
@@ -85,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `artisan_album` (
   `is_primary` tinyint(1) NOT NULL,
   `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`artisan_album_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
 
 -- --------------------------------------------------------
 
@@ -142,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `collection_enterprise` (
   `enterprise_id` bigint(20) NOT NULL,
   `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`ce_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 -- --------------------------------------------------------
 
@@ -199,14 +201,14 @@ CREATE TABLE IF NOT EXISTS `country` (
 CREATE TABLE IF NOT EXISTS `enterprise` (
   `enterprise_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `enterprise_name` varchar(200) NOT NULL,
-  `enterprise_description` longtext NOT NULL,
+  `enterprise_description` varchar(500) NOT NULL,
   `enterprise_status` tinyint(4) NOT NULL,
-  `article_id` bigint(20) NOT NULL,
+  `article_id` bigint(20) NOT NULL DEFAULT '0',
   `date_created` timestamp NULL DEFAULT NULL,
   `last_modified` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`enterprise_id`),
   KEY `article_id` (`article_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 -- --------------------------------------------------------
 
@@ -221,7 +223,7 @@ CREATE TABLE IF NOT EXISTS `enterprise_album` (
   `is_primary` tinyint(4) NOT NULL,
   `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`enterprise_album_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=14 ;
 
 -- --------------------------------------------------------
 
@@ -235,7 +237,7 @@ CREATE TABLE IF NOT EXISTS `enterprise_artisan` (
   `artisan_id` bigint(20) NOT NULL,
   `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`ea_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 -- --------------------------------------------------------
 

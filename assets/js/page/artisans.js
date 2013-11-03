@@ -14,7 +14,6 @@ $(function(){
         droppable: false,
         onchange: null,
         thumbnail: true,
-		no_icon : 'icon-cloud-upload',
         preview_error : function(filename, error_code) {
             //name of the file that failed
             //error_code values
@@ -29,6 +28,73 @@ $(function(){
         alert('image');
     });*/
 	
+	$('.status-button').on('click', function(){
+		var stats = $(this).attr('data-status');
+		var id = $(this).attr('data-status-id');
+		var type = $(this).attr('data-status-type');
+				
+		if ( stats == 0 ) {
+			stats_label = "Unpublish";
+		}
+		else if (stats == 1) {
+			stats_label = "Publish";
+		}
+				
+		$('#status-modal #myModalLabel').html( stats_label + " this " + type + "?");
+		$('#status-modal #update-status-type').html( type );
+		$('#status-modal #btn-status-yes').attr('data-status', stats);
+		$('#status-modal #btn-status-yes').attr('data-status-id', id);
+		$('#status-modal #btn-status-yes').attr('data-status-type', type);
+		$('#status-modal').modal('show');
+	});
+	
+	$('#status-modal #btn-status-yes').on('click', function(){
+		var stats = $(this).attr('data-status');
+		var id = $(this).attr('data-status-id');
+		var type = $(this).attr('data-status-type');
+	
+		if(isNaN(stats) && isNaN(id) && type == ''){
+			alert('Hacker Detected!');
+			// logout
+		}
+		else{			
+			$('#status-modal #label-msg').html('<i class="icon-spinner icon-spin"></i> Updating status...');
+			
+			if (type == "product") {
+				post_url = site_url + "product/update_status";
+				redirect_url = site_url + 'product/' + id;
+			}
+			else if (type == "artisan") {
+				post_url = site_url + "artisan/update_status";
+				redirect_url = site_url + 'artisan/details/' + id;	
+			}
+			else if (type == "enterprise") {
+				post_url = site_url + "enterprise/update_status";
+				redirect_url = site_url + 'enterprise/details/' + id;	
+			}
+			
+			$.post( post_url , {
+				id : id,
+				status : stats
+			}, function(data){
+				$('#status-modal').modal('hide');
+				$("#alert-modal").modal('show');
+				
+				if(data.status == 1){
+					$("#alert-modal .modal-body h5 span").html(data.response);
+				}
+				else if (data.status == 2){
+					alert(data.response);
+				}
+				else {
+					// an error occured					
+					$("#alert-modal").on('hidden', function(){						
+						$("#alert-modal").modal('hide');
+					});
+				}
+			}, 'json');
+		}
+	});
 	
 	$('body').on('click', '#edit-artisan-name #save_art_name', function(event){
 		$('#edit-artisan-name #save-msg').html('<i class="icon-spinner icon-spin"></i> updating artisan\'s name...');
@@ -130,8 +196,12 @@ $(function(){
 		}, function(data){
 			if(data.status == 1){
 				$('#delete-artisan #delete-msg').html('<span class="label label-lg label-success arrowed-right">'+ data.response +'</span>');
+				
+				$('#delete-artisan .modal-footer #modal-buttons .btn').hide();
+                $('#delete-artisan .modal-footer #modal-buttons #close_btn').show();
+				
 				$('#delete-artisan').on('hidden', function() {
-					window.location = site_url + 'artisans/listings';
+					window.location = site_url + 'artisan/listings';
 				});
 			}
 			else if(data.status == 2){
@@ -144,5 +214,5 @@ $(function(){
 		}, 'json');
 	});
 	
-	$('#edit-artisan-desc, #edit-artisan-name, #edit-artisan-entr #delete-artisan, #upload_artisan_image').on('hidden', function(){ window.location = document.URL; });
+	$('#edit-artisan-desc, #edit-artisan-name, #edit-artisan-entr #delete-artisan, #upload_artisan_image, #alert-modal').on('hidden', function(){ window.location = document.URL; });
 });

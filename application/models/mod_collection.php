@@ -3,6 +3,7 @@
 class Mod_collection extends CI_Model{
     private $collection = 'collection';
 	private $collection_product = 'collection_product';
+	private $collection_enterprise = 'collection_enterprise';
 
     function get_all(){
 		$this->db->cache_off();
@@ -18,6 +19,16 @@ class Mod_collection extends CI_Model{
 		$data['date_added'] = date('Y-m-d H:i:s');
 		
 		$insert = $this->db->insert($this->collection_product, $data);
+		
+		if($insert) return 1;
+		
+		return 0;
+	}
+	
+	function add_enterprise($data){
+		$data['date_added'] = date('Y-m-d H:i:s');
+		
+		$insert = $this->db->insert($this->collection_enterprise, $data);
 		
 		if($insert) return 1;
 		

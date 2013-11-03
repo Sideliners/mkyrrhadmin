@@ -503,7 +503,7 @@ class Product extends MY_Controller{
 		if(!$this->input->is_ajax_request()) redirect(site_url('404_override'));
 		
 		if($this->user->is_logged_in()){
-			$product_id = $this->input->post('product_id');
+			$product_id = $this->input->post('id');
 			
 			if(is_numeric($product_id)) {
 				$deleted = $this->mod_product->delete($product_id);				

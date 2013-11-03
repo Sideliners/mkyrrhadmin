@@ -1,8 +1,4 @@
-<?php if(isset($error)): ?>
-<div class="alert alert-error"><?=$error;?></div>
-<?php elseif(isset($success)): ?>
-<div class="alert alert-success"><?=$success;?></div>
-<?php endif; ?>
+<?php echo (isset($response))? $response : ''; ?>
 
 <?=form_open_multipart('', array('method' => 'post')); ?>
 <div class="clearfix">
@@ -24,10 +20,22 @@
         <div>
             <label for="enterprise_description">About the Enterprise</label>
             <div>
-                <textarea class="input-block-level autosize-transition" id="enterprise_description" name="enterprise_description"><?php echo set_value('enterprise_description'); ?></textarea>
+                <textarea class="form-control input-block-level limited" id="enterprise_description" name="enterprise_description" maxlength="500" rows="5"><?php echo set_value('enterprise_description'); ?></textarea>
             </div>
         </div>
         
+        <div>
+            <div class="margin-bottom">
+                <label for="theme_name">Theme(s)</label>
+                <div>
+                    <select id="theme_name" name="theme_name[]" multiple="multiple" data-placeholder="Choose theme" class="input-xxlarge chosen-select tag-input-style">
+                        <?php foreach($collections as $collection): ?>
+                        <option value="<?=$collection->collection_id;?>" <?php echo set_select('theme_name[]', $collection->collection_id);?>><?=$collection->collection_name;?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+        </div>
     </div>
     
 </div>

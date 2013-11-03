@@ -327,32 +327,7 @@ class Artisan extends MY_Controller{
 				// delete artisan
 				$deleted = $this->mod_artisan->delete($artisan_id);				
 				if($deleted){
-					// delete artisan's related items
-					
-					$products = 0;					
-					$articles = 0;
-					if ($artisan_products = $this->mod_artisan->get_artisan_products($artisan_id)) {
-						foreach ($artisan_products as $product) {
-							if ($article = $this->mod_articles->get_article($product->article_id)) {
-								// delete product's article
-								if ($this->mod_articles->delete($article->article_id)) {
-									//  delete product
-									if ($this->mod_products->delete($product->product_id)) {
-										$products++;
-									} // delete product
-								} // delete product's article
-							}
-						}
-					}
-					
-					// delete artisan's article
-					if ($article = $this->mod_articles->get_article($artisan->article_id)) {
-						if ($this->mod_articles->delete($article->article_id)) {
-							$articles++;
-						}						
-					} // delete artisan's article
-					
-					$jsondata = array('status' => 1, 'response' => 'Artisan deleted. Related Items Deleted: '.$products.' products, '.$articles.' articles');
+					$jsondata = array('status' => 1, 'response' => 'Artisan deleted');
 				}
 				else{
 					$jsondata = array('status' => 0, 'response' => 'Failed to delete artisan');
@@ -373,11 +348,20 @@ class Artisan extends MY_Controller{
 		if(!$this->input->is_ajax_request()) redirect(site_url('404_override'));
 		
 		if($this->user->is_logged_in()){
-			$id = intval($this->input->post('id'));
-			$status = intval($this->input->post('status'));
+			$id = $this->input->post('id');
+			$status = $this->input->post('status');
 			
-			if(is_numeric($id)){
-				if ($artisan = $this->mod_artisan->get_artisan($id)) {
+			if(is_numeric($id) && is_numeric($status)){
+				$update = $this->mod_artisan->update_artisan(array('artisan_status' => $status), $id);
+				
+				if($update){
+					$jsondata = array('status' => 1, 'response' => 'Artisan\'s status updated');
+				}
+				else{
+					$jsondata = array('status' => 0, 'response' => 'Failed to update artisan\'s status');
+				}
+				
+				/*if ($artisan = $this->mod_artisan->get_artisan($id)) {
 					if ($artisan->article_id > 0) {
 						if(is_numeric($status)){
 							$response = $this->mod_artisan->update_artisan(array('artisan_status' => $status), $id);
@@ -418,7 +402,7 @@ class Artisan extends MY_Controller{
 				}
 				else {
 					$jsondata = array('status' => 0, 'response' => 'Hacker Detected!');
-				}
+				}*/
 			}
 			else{
 				$jsondata = array('status' => 0, 'response' => 'Invalid Parameters');

@@ -7,62 +7,50 @@ class Enterprise extends MY_Controller{
     }
 
 	public function index($enterprise_id = NULL){
-		if($this->user->is_logged_in()){			
+		if($this->user->is_logged_in()){
 			if(!is_null($enterprise_id) && is_numeric($enterprise_id)){
 				$enterprise = $this->mod_enterprise->get_enterprise($enterprise_id);
 				
 				if(is_object($enterprise)){
-					$contentdata['script'] = array('admin', 'enterprises');
-					$contentdata['styles'] = NULL;
+					$contentdata['script'] = array('admin', 'jquery.inputlimiter.1.3.1.min', 'chosen.jquery.min', 'enterprises');
+            		$contentdata['styles'] = array('chosen');
 					
 					$pagedata = $this->_page_defaults('Edit Enterprise - '. $enterprise->enterprise_name, 'prod_enterprises', 'enterpriseslist');
 					
 					if(isset($_POST['save_enterprise_image'])){
-						$filename = basename($_FILES['enterprise_image']['name']);
-						$tempname = $_FILES['enterprise_image']['tmp_name'];
-						$filetype = $_FILES['enterprise_image']['type'];
-						$filesize = ($_FILES['enterprise_image']['size'] / 1024);
-						$uploadError = $_FILES['enterprise_image']['error'];
-						
-						$req_size = 4096; // kilobytes
-						$type = explode("/", $filetype);
-						
-						$path = $this->config->item('enterprises_upload_path');
-						
-						$filetypes = $this->config->item('filetypes');
-						
-						if($uploadError == 0){
-							if(in_array($filetype, $filetypes) && $filesize <= $req_size){
-								$newfilename = date('YmdHis').'.'.$type[1];
+						if(is_numeric($enterprise_id)){
+							$upload = (object)$this->upload_image($enterprise_id);
+		
+							if($upload->status){
+								$photo_id = $this->mod_enterprise->add_photo(array('enterprise_image' => $upload->response->file_name, 'enterprise_id' => $enterprise_id));
 								
-								if(move_uploaded_file($tempname, $path.$newfilename)){
-									$update = $this->mod_enterprise->update_enterprise(array('enterprise_image' => $newfilename), $enterprise_id);
-									
-									if($update){
-										$pagedata['success'] = 'Enterprise update';
-									}
-									else{
-										$pagedata['error'] = $update;
-									}
+								if($this->input->post('is_primary')){
+									$make_primary = $this->mod_enterprise->set_primary_photo(array('is_primary' => 1), $enterprise_id, $photo_id);
+								}
+								
+								if($photo_id){
+									$pagedata['response'] = '<div class="alert alert-success">Enterprise image updated</div>';
 								}
 								else{
-									$pagedata['error'] = 'Image Error : Failed to upload image';
+									$pagedata['response'] = '<div class="alert alert-error">Failed to update Enterprise image</div>';
 								}
 							}
 							else{
-								$pagedata['error'] = 'Image Error : Invalid Image';
+								$pagedata['response'] = $upload->response;
 							}
 						}
 						else{
-							$pagedata['error'] = 'Image Error : Select Image for this Enterprise';
+							$pagedata['response'] = '<div class="alert alert-error">Invalid parameters</div>';
 						}
 					}
 					
 					$enterprise = $this->mod_enterprise->get_enterprise($enterprise_id);
-					$enterprise->article = ''; //$this->mod_articles->get_prod_article($enterprise->article_id);
-					$enterprise->artisans = $this->mod_enterprise->get_enterprise_artisans($enterprise->enterprise_id);
 					
 					$pagedata['enterprise'] = $enterprise;
+					$pagedata['album'] = $this->mod_enterprise->get_album($enterprise_id);
+					$pagedata['artisans'] = $this->mod_enterprise->get_artisans($enterprise_id);
+					$pagedata['article'] = $this->mod_enterprise->get_article($enterprise->article_id);
+					$pagedata['collections']	= $this->mod_enterprise->get_collection($enterprise_id);
 					
 					$contentdata['page'] = $this->load->view('page/enterprise', $pagedata, TRUE);
 				}
@@ -83,8 +71,8 @@ class Enterprise extends MY_Controller{
 	
     public function listings(){
         if($this->user->is_logged_in()){
-			$contentdata['script'] = array('admin', 'enterprises');
-			$contentdata['styles'] = NULL;
+			$contentdata['script'] = array('admin', 'jquery.inputlimiter.1.3.1.min', 'chosen.jquery.min', 'enterprises');
+            		$contentdata['styles'] = array('chosen');
 			
             $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
             $perpage = 10;
@@ -117,7 +105,7 @@ class Enterprise extends MY_Controller{
 				} // form validation
             }
 
-            $pagedata['enterprises'] = $this->mod_enterprise->get_enterprises($perpage, $page);
+            $pagedata['enterprises'] = $this->_enterprises($perpage, $page);
             $pagedata['pagination'] = $this->paginate($url, $total, $perpage);
 
             $contentdata['page'] = $this->load->view('page/enterprise_list', $pagedata, TRUE);
@@ -128,67 +116,100 @@ class Enterprise extends MY_Controller{
         }
     }
 	
+	private function _enterprises($perpage, $page){
+		$enterprises = $this->mod_enterprise->get_enterprises($perpage, $page);
+		$status = 'Unpublished';
+		$data = '';
+		
+		foreach($enterprises as $row){
+			$data.= '<li class="span3" style="margin-left: 0px; margin-right: 1.5%;">';
+			$data.= '<div class="thumbnail">';
+			$data.= '<div class="enterprise_checkbox pull-left"><input type="checkbox" class="ace enterprise-item" name="enterprise_item[]" value="'.$row->enterprise_id.'" /><span class="lbl"></span></div>';
+			
+			$image = $this->mod_enterprise->primary_image($row->enterprise_id);
+			
+			if(is_object($image)){
+				$data.= '<div class="center-cropped artisan-listing" style="background-image: url(\''.base_url('uploads/images/enterprises/'.$image->enterprise_image).'\');">';
+			}
+			else{
+				$data.= '<div class="center-cropped artisan-listing" style="background-color: #CCC; color: #FFF;"><i class="icon-user icon-4x"></i>';
+			}
+			
+			$data.= '</div>';
+			
+			if($row->enterprise_status == 1){
+				$status = 'Published';
+			}
+			
+			$data.= '
+				<div class="caption">
+					<h5><a href="'.site_url('enterprise/details/'.$row->enterprise_id).'">'.$row->enterprise_name.'</a><br /><small>('.$status.')</small></h5>
+					<p>'.substr(strip_tags($row->enterprise_description), 0, 150).'..</p>
+					<div><a href="'.site_url('enterprise/details/'.$row->enterprise_id).'" class="label label-lg label-pink arrowed-right"><i class="icon-edit"></i> Details</span></a>
+				</div>
+			';
+			$data.= '</div>';
+			$data.= '</li>';
+		}
+		
+		return $data;
+	}
+	
 	public function create(){
-		$contentdata['script'] = array('admin');
-
         if($this->user->is_logged_in()){
-            $pagedata['page_title'] = 'Add Enterprise';
-            $pagedata['page'] = 'prod_enterprises';
-            $pagedata['sub_page'] = 'enterpriseslist';
-            $pagedata['user'] = $this->_user;
-
-            array_push($contentdata['script'], 'enterprises');
+			$contentdata['script'] = array('admin', 'enterprises', 'jquery.inputlimiter.1.3.1.min', 'chosen.jquery.min');
+			$contentdata['styles'] = array('chosen');
+			
+			$pagedata = $this->_page_defaults('Add Enterprise', 'prod_enterprises', 'enterpriseslist');
 
             if(isset($_POST['save_enterprise'])){
 				if($this->form_validation->run('create_enterprise') == FALSE){
-					$pagedata['error'] = validation_errors();
+					$pagedata['response'] = validation_errors('<div class="alert alert-error"><i class="icon-warning"></i> ', '</div>');
 				}
 				else{
-					$filename = basename($_FILES['enterprise_image']['name']);
-					$tempname = $_FILES['enterprise_image']['tmp_name'];
-					$filetype = $_FILES['enterprise_image']['type'];
-					$filesize = ($_FILES['enterprise_image']['size'] / 1024);
-					$uploadError = $_FILES['enterprise_image']['error'];
+					$collection_response = 0;
 					
-					$req_size = 4096; // kilobytes
-					$type = explode("/", $filetype);
+					$data = array(
+						'enterprise_name' => $this->input->post('enterprise_name'),
+						'enterprise_description' => $this->input->post('enterprise_description'),
+						'enterprise_status' => 1,
+						'date_created' => date('Y-m-d H:i:s')
+					);
 					
-					$path = $this->config->item('enterprises_upload_path');
+					$enterprise_id = $this->mod_enterprise->add_enterprise($data);
 					
-					$filetypes = $this->config->item('filetypes');
+					$theme = $this->input->post('theme_name');
+					$theme_cnt = count($theme);
 					
-					if($uploadError == 0){
-						if(in_array($filetype, $filetypes) && $filesize <= $req_size){
-							$newfilename = date('YmdHis').'.'.$type[1];
+					for($i = 0; $i < $theme_cnt; ++$i){
+						$collection_response += $this->mod_collection->add_enterprise(array('collection_id' => $theme[$i], 'enterprise_id' => $enterprise_id));
+					}
+					
+					if($enterprise_id && $collection_response){
+						$upload = (object)$this->upload_image($enterprise_id);
+						
+						if($upload->status){
+							$add_image = $this->mod_enterprise->add_photo(array('enterprise_image ' => $upload->response->file_name, 'enterprise_id' => $enterprise_id, 'is_primary' => 1));
 							
-							if(move_uploaded_file($tempname, $path.$newfilename)){
-								unset($_POST['save_enterprise']);
-								$params = $this->input->post();
-								$params['enterprise_image'] = mysql_real_escape_string($newfilename);
-								
-								$enterprise_id = $this->mod_enterprise->add_enterprise($params);
-								
-								if($enterprise_id){
-									$pagedata['success'] = 'Enterprise created';
-								}
-								else{
-									$pagedata['error'] = $enterprise_id;
-								}
+							if($add_image){
+								$pagedata['response'] = '<div class="alert alert-success">Enterprise Added!</div>';
 							}
 							else{
-								$pagedata['error'] = 'Image Error : Failed to upload image';
+								$pagedata['response'] = '<div class="alert alert-error">Failed to Add Image</div>';
 							}
 						}
 						else{
-							$pagedata['error'] = 'Image Error : Invalid Image';
+							$pagedata['response'] = $upload->response;
 						}
-					} // image error validation
+					}
 					else{
-						$pagedata['error'] = 'Image Error : Select Image for this Enterprise';
-					}					
+						$pagedata['response'] = '<div class="alert alert-error">Failed to created Enterprise</div>';
+					}
 				} // form validation
             }
-
+			
+			$pagedata['collections'] = $this->mod_collection->get_all();
+			
             $contentdata['page'] = $this->load->view('page/add_enterprise', $pagedata, TRUE);
 			
 			$this->templateLoader($contentdata);
@@ -205,27 +226,28 @@ class Enterprise extends MY_Controller{
 			$enterprise_id = $this->input->post('enterprise_id');
 			
 			$label = NULL;
-			if( isset($_POST['name']) ) {
+			
+			if(isset($_POST['name'])) {
 				$label = 'name';
 				$field_name = 'enterprise_name';
 				$value = $this->input->post('name');
 			}
-			elseif(isset($_POST['description'])){
+			if(isset($_POST['description'])){
 				$label = 'description';
 				$field_name = 'enterprise_description';
 				$value = $this->input->post('description');
 			}			
 			
 			$status = 0;
-			$reponse = "Invalid Parameters"; # default response
+			$response = "Invalid Parameters"; # default response
 			
-			if (!is_null($label)) {
-				if( is_numeric($enterprise_id) && is_string($value) && $value != '' ){
+			if (!is_null($label)){
+				if(is_numeric($enterprise_id) && !empty($value)){
 					$data = array($field_name => trim($value));
 					$update = $this->mod_enterprise->update_enterprise($data, $enterprise_id);
 					
 					$success_message = 'Enterprise\'s ' . $label . ' updated';
-					$failed_message = 'Failed to update enterprise\'s ' . $name;
+					$failed_message = 'Failed to update enterprise\'s ' . $label;
 					
 					if($update) {
 						$status		= 1;
@@ -239,7 +261,7 @@ class Enterprise extends MY_Controller{
 		}
 		else{
 			$status = 2;
-			$reponse = "Your session has expired";
+			$response = "Your session has expired";
         }
 		
 		$jsondata = array('status' => $status, 'response' =>  $response);
@@ -253,54 +275,10 @@ class Enterprise extends MY_Controller{
 			$enterprise_id = $this->input->post('enterprise_id');
 			
 			if(is_numeric($enterprise_id)) {
-				$enterprise = $this->mod_enterprise->get_enterprise($enterprise_id);
-				
 				// delete enterprise
 				$deleted = $this->mod_enterprise->delete($enterprise_id);								
 				if($deleted){				
-					// delete enterprise's related items				
-					
-					$products = 0;
-					$artisans = 0;	
-					$articles = 0;				
-					if ($enterprise_artisans = $this->mod_enterprise->get_enterprise_artisans($enterprise_id)) {						
-						foreach ($enterprise_artisans as $artisan) {
-														
-							if ($article = $this->mod_articles->get_article($artisan->article_id)) {
-								// delete artisan's article
-								if ($this->mod_articles->delete($article->article_id)) {
-									// delete artisan
-									if ($this->mod_artisan->delete($artisan->artisan_id)) {
-										$artisans++;
-									} // delete artisan
-								} // delete artisan's article
-							}							
-							
-							if ($artisan_products = $this->mod_artisan->get_artisan_products($artisan->artisan_id)) {
-								// delete artisan's products
-								foreach ($artisan_products as $product) {									
-									if ($article = $this->mod_articles->get_article($product->article_id)) {
-										// delete product's article
-										if ($this->mod_articles->delete($article->article_id)) {
-											// delete product
-											if ($this->mod_products->delete($product->product_id)) {
-												$products++;
-											} // delete product
-										} // delete product's article
-									} 
-								} // delete artisan's products
-							}
-						}
-					}
-					
-					if ($article = $this->mod_articles->get_article($enterprise->article_id)) {
-						// delete enterprise's article
-						if ($this->mod_articles->delete($article->article_id)) {
-							$articles++;
-						} // delete enterprise's article
-					}
-					
-					$jsondata = array('status' => 1, 'response' => 'Enterprise deleted. Related Items Deleted: '.$artisans.' artisans, '.$products.' products, '.$articles.' articles');
+					$jsondata = array('status' => 1, 'response' => 'Enterprise deleted.');
 				}
 				else{
 					$jsondata = array('status' => 0, 'response' => 'Failed to delete enterprise');
@@ -321,67 +299,18 @@ class Enterprise extends MY_Controller{
 		if(!$this->input->is_ajax_request()) redirect(site_url('404_override'));
 		
 		if($this->user->is_logged_in()){
-			$id = intval($this->input->post('id'));
-			$status = intval($this->input->post('status'));
+			$id = $this->input->post('id');
+			$status = $this->input->post('status');
 			
-			if(is_numeric($id)){
-				if ($enterprise = $this->mod_enterprise->get_enterprise($id)) {
-					if ($enterprise->article_id > 0) {
-						if(is_numeric($status)){
-							$response = $this->mod_enterprise->update_enterprise(array('enterprise_status' => $status), $id);
-							
-							if($response){
-								$products = 0;
-								$artisans = 0;	
-								$articles = 0;				
-								if ($enterprise_artisans = $this->mod_enterprise->get_enterprise_artisans($id)) {						
-									foreach ($enterprise_artisans as $artisan) {
-																	
-										if ($article = $this->mod_articles->get_article($artisan->article_id)) {
-											if ($this->mod_articles->update_article(array('status' => $status), $article->article_id)) {												
-												if ($this->mod_artisan->update_artisan(array('artisan_status' => $status), $artisan->artisan_id)) {
-													$artisans++;
-												}
-											}
-										}
-										
-										if ($artisan_products = $this->mod_artisan->get_artisan_products($artisan->artisan_id)) {											
-											foreach ($artisan_products as $product) {
-												if ($article = $this->mod_articles->get_article($product->article_id)) {
-													if ($this->mod_articles->update_article(array('status' => $status), $article->article_id)) {														
-														if ($this->mod_products->update_prod(array('product_status' => $status), $product->product_id)) {
-															$products++;
-														}
-													}
-												} 
-											}
-										}
-									}
-								}
-								
-								if ($article = $this->mod_articles->get_article($enterprise->article_id)) {									
-									if ($this->mod_articles->update_article(array('status' => $status), $article->article_id)) {
-										$articles++;
-									}
-								}
-								
-								$jsondata = array('status' => 1, 'response' => 'Enterprise status updated. Related Items Updated: '.$artisans.' artisans, '.$products.' products, '.$articles.' articles');
-							}
-							else{
-								$jsondata = array('status' => 0, 'response' => 'Failed to update enterprise\'s status');
-							}
-						}
-						else{
-							$jsondata = array('status' => 0, 'response' => 'Invalid Parameters');
-						}
-					}
-					else {
-						$jsondata = array('status' => 0, 'response' => 'Please provide an article for this enterprise');
-					}
+			if(is_numeric($id) && is_numeric($status)){
+				$update = $this->mod_enterprise->update_enterprise(array('enterprise_status' => $status), $id);
+				
+				if($update){
+					$jsondata = array('status' => 1, 'response' => 'Enterprise status updated');
 				}
-				else {
-					$jsondata = array('status' => 0, 'response' => 'Hacker Detected!');
-				}				
+				else{
+					$jsondata = array('status' => 0, 'response' => 'Failed to update Enterprise\'s status');
+				}
 			}
 			else{
 				$jsondata = array('status' => 1, 'response' => 'Invalid Parameters');
@@ -392,6 +321,23 @@ class Enterprise extends MY_Controller{
 		}
 		
 		echo json_encode($jsondata);
+	}
+	
+	private function upload_image($id){
+		$config['file_name'] = $id.'_'.date('YmdHis');
+		$config['upload_path'] = $this->config->item('enterprise_upload_path');
+		$config['allowed_types'] = 'gif|jpg|pjpeg|jpeg|png|x-png';
+		$config['max_size']	= '1024';
+		$config['max_width']  = '1024';
+		$config['max_height']  = '768';
+		
+		$this->load->library('upload', $config);
+		
+		if($this->upload->do_upload('enterprise_image')){
+			return array('status' => TRUE, 'response' => (object)$this->upload->data());
+		}
+		
+		return array('status' => FALSE, 'response' => $this->upload->display_errors('<div class="alert alert-error">', '</div>'));
 	}
 }
  

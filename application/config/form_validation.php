@@ -111,6 +111,11 @@ $config = array(
             'field' => 'enterprise_description',
             'label' => 'Enterprise Description',
             'rules' => 'required|trim|xss_clean'
+		),
+		array(
+            'field' => 'theme_name[]',
+            'label' => 'Theme',
+            'rules' => 'required|trim|xss_clean'
 		),//create_enterprise
 	),
 	'batch_update_enterprise' => array(

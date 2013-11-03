@@ -18,7 +18,7 @@
         	<?php if(!empty($photo->artisan_image)): ?>
         	<img src="<?=base_url('uploads/images/artisans/'.$photo->artisan_image);?>" />
             <?php endif; ?>
-            <div class="caption text-center">Primary Image</div>
+            <div class="caption"><?php echo ($artisan->artisan_status > 0)? '<label class="label label-success arrowed-right"><i class="icon-check"></i> Published</label>' : '<label class="label label-grey arrowed-right"><i class="icon-check"></i> Unpublished</label>'; ?></div>
          </div>
     </div>
     
@@ -35,7 +35,7 @@
         
         <br />
         <h5 class="border-bottom">
-           Enterprise <small><a href="#edit-artisan-entr" class="pull-right btn-link" data-toggle="modal" role="button"><i class="icon-edit"></i> Edit</a></small>
+           Enterprise <small></small>
         </h5>
         <div class="margin-bottom" id="art_entr">
         	<?php if($enterprises): ?>

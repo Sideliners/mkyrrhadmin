@@ -93,3 +93,56 @@
     </div>
     <?=form_close();?>
 </div>
+
+<div id="status-modal" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel"></h3>
+    </div>
+    <div class="modal-body">
+	    <div id="modal-message">
+        	<label>
+    	    	<p>Do you really want to change current status of this <span id="update-status-type"></span>?</p>
+                <h5 class="alert">
+                    <strong> WARNING! </strong>
+                    <span> Related Items will also be affected.
+                    </span>
+                </h5>
+            </label>
+        </div>
+    </div>
+    <div class="modal-footer">
+    	<div class="pull-left">
+        	<div id="label-msg"></div>
+        </div>
+        <div id="action-btns">
+	        <button type="button" class="btn btn-mini" data-dismiss="modal" aria-hidden="true">No</button>
+    	    <button type="button" id="btn-status-yes" name="btn-status-yes" class="btn btn-primary btn-mini">Yes</button>
+        </div>
+    </div>
+</div>
+
+<div id="delete-artisan" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Delete  <font style="font-style: italic;">'<?=$artisan->artisan_name; ?>'</font></h3>
+    </div>
+    <div class="modal-body">
+    	<label for="artisan_name">        
+        	<p>Do you really want to delete this artisan?</p>
+	        <p class="alert"><strong>WARNING!</strong> Related products and articles will also be deleted!</p>
+         </label>
+    </div>
+    <div class="modal-footer">
+    	<div class="pull-left">
+        	<div id="delete-msg"></div>
+        </div>
+        <div class="pull-right">
+        	<div id="modal-buttons">
+        		<button type="button" class="btn btn-mini" data-dismiss="modal" aria-hidden="true">No</button>
+        		<button type="button" id="btn_del_art" name="btn_del_art" class="btn btn-primary btn-mini" data-artisan-id="<?=$artisan->artisan_id;?>">Yes</button>
+                <button type="button" id="close_btn" class="btn btn-mini" data-dismiss="modal" aria-hidden="true" style="display: none;">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

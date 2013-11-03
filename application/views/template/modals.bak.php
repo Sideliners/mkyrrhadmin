@@ -244,25 +244,7 @@
     </div>
 </div>
 
-<div id="delete-artisan" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">Delete  <font style="font-style: italic;">'<?=$artisan->artisan_name; ?>'</font></h3>
-    </div>
-    <div class="modal-body">
-    	<label for="artisan_name">        
-        	<p>Do you really want to delete this artisan?</p>
-	        <p class="alert"><strong>WARNING!</strong> Related products and articles will also be deleted!</p>
-         </label>
-    </div>
-    <div class="modal-footer">
-    	<div class="pull-left">
-        	<div id="delete-msg"></div>
-        </div>
-        <button type="button" class="btn btn-mini" data-dismiss="modal" aria-hidden="true">No</button>
-        <button type="button" id="btn_del_art" name="btn_del_art" class="btn btn-primary btn-mini" data-artisan-id="<?=$artisan->artisan_id;?>">Yes</button>
-    </div>
-</div>
+
 
 <!-- ARTISAN -->
 

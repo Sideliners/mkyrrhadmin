@@ -30,7 +30,9 @@
         <div class="span3" id="thumbnail">
             <div class="thumbnail">
                 <img src="<?=base_url('uploads/images/products/'.$product->product_image);?>" />
-                <div class="caption text-center">Primary Photo</div>
+                <div class="caption">
+				<?php echo ($product->product_status > 0)? '<label class="label label-success arrowed-right"><i class="icon-check"></i> Published</label>' : '<label class="label label-grey arrowed-right"><i class="icon-check"></i> Unpublished</label>'; ?>
+                </div>
              </div>
         </div>
 
@@ -38,7 +40,7 @@
             <h5 class="border-bottom">
                 Name <small><a href="#update_prod_name" data-toggle="modal" role="button" class="pull-right btn-link"><i class="icon-edit"></i> Edit</a></small>
             </h5>
-            <div class="margin-bottom" id="prod_name"><strong><?=$product->product_name;?></strong></div>
+            <div class="margin-bottom" id="prod_name"><h3><?=$product->product_name;?></h3></div>
         
             <br />
             <h5 class="border-bottom">

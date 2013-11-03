@@ -279,18 +279,8 @@ $(function(){
 		else{			
 			$('#status-modal #label-msg').html('<i class="icon-spinner icon-spin"></i> Updating status...');
 			
-			if (type == "product") {
-				post_url = site_url + "product/update_status";
-				redirect_url = site_url + 'product/' + id;
-			}
-			else if (type == "artisan") {
-				post_url = site_url + "artisans/update_status";
-				redirect_url = site_url + 'artisans/details/' + id;	
-			}
-			else if (type == "enterprise") {
-				post_url = site_url + "enterprises/update_status";
-				redirect_url = site_url + 'enterprises/details/' + id;	
-			}
+			post_url = site_url + "product/update_status";
+			redirect_url = site_url + 'product/' + id;
 			
 			$.post( post_url , {
 				id : id,

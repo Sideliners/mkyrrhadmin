@@ -64,7 +64,11 @@ img.thumb{ max-width: 65px !important; }
 	height: 17px !important;
 	padding: 2px 5px 1px !important;
 }
-.label-purple, .label-pink, .label-success, .label-danger{ height: 21px !important; }
+.label-purple, .label-pink, .label-success, .label-danger{ height: 18px !important; }
+
+.label-lg.arrowed-right:after {
+    border-width: 11px 6px !important;
+}
 
 /*.login-layout{ background-color: #F5F5F5 !important; }*/
 

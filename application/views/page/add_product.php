@@ -24,9 +24,9 @@
         
         <div class="clearfix margin-bottom">
             <div class="margin-bottom">
-                <label for="theme_name">Collection(s)</label>
+                <label for="theme_name">Theme(s)</label>
                 <div>
-                    <select id="theme_name" name="theme_name[]" multiple="multiple" data-placeholder="Choose collection" class="input-xxlarge chosen-select tag-input-style" required>
+                    <select id="theme_name" name="theme_name[]" multiple="multiple" data-placeholder="Choose theme" class="input-xxlarge chosen-select tag-input-style" required>
                     	<?php foreach($collections as $collection): ?>
                         <option value="<?=$collection->collection_id;?>" <?php echo set_select('theme_name[]', $collection->collection_id);?>><?=$collection->collection_name;?></option>
                         <?php endforeach; ?>

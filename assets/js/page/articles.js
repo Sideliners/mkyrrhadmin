@@ -14,7 +14,7 @@ tinymce.init({
 });
 
 $(function(){
-    $(".chosen-select").chosen();
+    //$(".chosen-select").chosen();
 
     $("#article_image").ace_file_input({
         style : 'well',

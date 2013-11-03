@@ -220,7 +220,24 @@ class Mod_product extends CI_Model{
 	function delete($pid){
 		// product table
 		$sql1 = "DELETE  FROM {$this->product} WHERE product_id = {$pid}";
-
+		
+		if($this->delete_photos($pid)){
+			$prod_delete = $this->db->query($sql1);
+			
+			if($prod_delete){			
+				return TRUE;
+			}
+			else{
+				return FALSE;
+			}
+		}
+		else{
+			return FALSE;
+		}
+	}
+	
+	private function delete_photos($pid){
+		$sql1 = "DELETE  FROM {$this->product_album} WHERE product_id = {$pid}";
 		$prod_delete = $this->db->query($sql1);
 		
 		if($prod_delete){			
