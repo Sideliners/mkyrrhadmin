@@ -28,7 +28,7 @@
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th>
+                        <th width="30">
                             <center>
                                 <input type="checkbox" id="check_all" class="ace" onchange="checkAll('productlist')" />
                                 <span class="lbl"></span>

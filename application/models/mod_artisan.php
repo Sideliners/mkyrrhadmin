@@ -10,19 +10,21 @@ class Mod_artisan extends CI_Model{
 	private $product = 'product';
 	private $article = 'article';
 
-    function get_artisans($limit = NULL, $start = NULL, $column = NULL, $order = NULL){
+    function get_artisans($limit = NULL, $start = NULL, $search = NULL){
         $this->db->cache_off();
 		
-        if(!is_null($order) && !is_null($column)){
-		    $this->db->order_by($column, $order);
-        }
-        else{
-		    $this->db->order_by("date_created", 'desc');
-        }
+		$this->db->select('*');
+		$this->db->from($this->artisan);
+		
+		if(!is_null($search)){
+			$this->db->like('artisan_name', $search);
+		}
+		
+        $this->db->order_by("date_created", 'desc');
         
         if(!is_null($limit) && !is_null($start)) $this->db->limit($limit, $start);
 		
-        $query = $this->db->get($this->artisan);
+        $query = $this->db->get();
 
         return $query->result();
     }

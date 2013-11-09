@@ -39,8 +39,11 @@ class Mod_enterprise extends CI_Model{
         return $query->num_rows();
     }
 
-    function get_enterprises($limit, $start){
+    function get_enterprises($limit, $start, $search = NULL){
         $this->db->cache_off();
+		
+		if(!is_null($search)) $this->db->like('enterprise_name', $search);
+		
 		$this->db->order_by('date_created', 'desc');
 		
         $query = $this->db->get($this->enterprise, $limit, $start);

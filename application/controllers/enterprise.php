@@ -72,7 +72,7 @@ class Enterprise extends MY_Controller{
     public function listings(){
         if($this->user->is_logged_in()){
 			$contentdata['script'] = array('admin', 'jquery.inputlimiter.1.3.1.min', 'chosen.jquery.min', 'enterprises');
-            		$contentdata['styles'] = array('chosen');
+            $contentdata['styles'] = array('chosen');
 			
             $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
             $perpage = 10;

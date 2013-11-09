@@ -27,8 +27,11 @@ class Mod_article extends CI_Model{
         return $query->num_rows();
     }
 
-    function get_all($limit, $start){
+    function get_all($limit, $start, $search = NULL){
         $this->db->cache_off();
+		
+		if(!is_null($search)) $this->db->like('article_title', $search);
+		
         $this->db->order_by('date_created', 'desc');
 
         $query = $this->db->get($this->article, $limit, $start);

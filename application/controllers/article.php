@@ -21,8 +21,6 @@ class Article extends MY_Controller{
             $pagedata['sub_page'] = 'articlelist';
             $pagedata['user'] = $this->_user;
 
-            array_push($contentdata['script'], 'articles');
-
             $pagedata['articles'] = $this->mod_article->get_all($perpage, $page);
             $pagedata['pagination'] = $this->paginate($url, $total, $perpage);
 
@@ -92,6 +90,7 @@ class Article extends MY_Controller{
                                 'article_title' => $this->input->post('article_title'),
                                 'article_body' => $this->input->post('article_body'),
                                 'article_type_id' => 1,
+								'article_status' => 1,
                                 'user_id' => $this->_user->user_id,
                             );
                             

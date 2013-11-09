@@ -38,7 +38,15 @@
                     <div class="page-header no-padding">
                         <h1>
                             <?=$page_title;?>
-                            <?php if($sub_page == 'productslist' || $sub_page == 'articlelist' || $sub_page == 'artisanslist'): ?>
+                            <?php
+							$subpage_array = array(
+								'productslist',
+								'articlelist',
+								'artisanslist',
+								'enterpriseslist'
+							);
+							?>
+                            <?php if(in_array($sub_page, $subpage_array)): ?>
                             <div class="pull-right" style="margin-top: 2px;">
                                 <?php
                                 $method = ''; 
@@ -46,6 +54,7 @@
 								if($sub_page == 'productslist'){ $method = 'products'; }
 								if($sub_page == 'articlelist'){ $method = 'articles'; }
 								if($sub_page == 'artisanslist'){ $method = 'artisans'; }
+								if($sub_page == 'enterpriseslist'){ $method = 'enterprise'; }
 								?>
                                 <?=form_open('search/'.$method, array('class' => 'no-margin input-append'));?>
                                     <input type="text" name="search" id="search" placeholder="search <?=$method;?>" required />

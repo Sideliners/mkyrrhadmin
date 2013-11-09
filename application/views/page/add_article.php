@@ -28,20 +28,7 @@
 
 <div class="clearfix">
 	<div class="pull-right">
-    	<?php if ($type = $this->uri->segment(2)):
-            $id = intval($this->uri->segment(3));
-            if ($type == 'product') {
-                $url = 'product/'.$id;
-            }
-            else if ($type == 'artisan') {
-                $url = 'artisans/details/'. $id;
-            }
-            else if ($type == 'enterprise') {
-                $url = 'enterprises/details/'. $id;
-            }
-        ?>
-        <a href="<?=site_url($url);?>" class="btn">Cancel</a>
-        <?php endif; ?>
+    	<button type="button" class="btn" onclick="window.history.back()">Cancel</button>
     	<button type="submit" class="btn btn-primary" name="save_article"><i class="icon-save"></i> Save</button>
         <input type="hidden" name="id" value="<?=$this->uri->segment(3);?>" />        
     </div>
