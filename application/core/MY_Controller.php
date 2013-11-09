@@ -145,4 +145,7 @@ class MY_Controller extends CI_Controller{
     private function userLoggedDetails(){
         $this->_user = $this->mod_user->getUser($this->session->userdata('email'));
     }
+	
+	function _sendEmail(){
+	}
 }

@@ -1,12 +1,6 @@
 <?php if(!empty($products)): ?>
 
-	<?php if(isset($success)): ?>
-    <div class="alert alert-success"><i class="icon-ok"></i> <?=$success;?></div>
-    <?php elseif(isset($error)): ?>
-    <?=$error;?>
-    <?php elseif(isset($no_changes)): ?>
-    <div class="alert alert-info"><i class="icon-warning-sign"></i> <?=$no_changes;?></div>
-    <?php endif; ?>
+	<?php echo (isset($response))? $response : ''; ?>
     
 	<div>
 		<?php $attr = array('id' => 'productlist', 'method' => 'post'); ?>

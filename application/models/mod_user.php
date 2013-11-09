@@ -42,4 +42,35 @@ class Mod_user extends CI_Model{
 
         return $this->db->affected_rows();
     }
+	
+	/*
+	 * superadmin models
+	 *
+	 */
+	function get_accounts($limit, $start){
+		$this->db->cache_off();
+		$this->db->where('user_type != 1');
+		$this->db->limit($limit, $start);
+		
+		$query = $this->db->get($this->user);
+		
+		return ($query->num_rows() > 0)? $query->result() : NULL;
+	}
+	
+	function get_total(){
+		$this->db->cache_off();
+		$this->db->where('user_type != 1');
+		
+		$query = $this->db->get($this->user);
+		
+		return $query->num_rows();
+	}
+	
+	function get_types(){
+		$this->db->where_in('user_type_id', array(2, 3));
+		
+		$query = $this->db->get($this->user_type);
+		
+		return $query->result();
+	}
 }

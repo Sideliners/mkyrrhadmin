@@ -21,6 +21,6 @@
         </ul>
     </li>
     <?php if($user->user_type == 1 || $user->user_type == 2): ?>
-    <li><a href="#"><i class="icon-group"></i> Accounts</a></li>
+    <li class="<?php echo ($page == 'accounts' )? 'active' : '';?>"><a href="<?=site_url('superadmin/accounts');?>"><i class="icon-group"></i> Accounts</a></li>
     <?php endif; ?>
 </ul>

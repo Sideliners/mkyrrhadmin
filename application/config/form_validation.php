@@ -130,4 +130,26 @@ $config = array(
             'rules' => 'required|trim|xss_clean'
 		),
 	),
+	'create_account' => array(
+		array(
+			'field' => 'user_type',
+            'label' => 'User type',
+            'rules' => 'required|trim|xss_clean'
+		),
+		array(
+			'field' => 'firstname',
+            'label' => 'First name',
+            'rules' => 'required|trim|xss_clean'
+		),
+		array(
+			'field' => 'lastname',
+            'label' => 'Last name',
+            'rules' => 'required|trim|xss_clean'
+		),
+		array(
+			'field' => 'user_email',
+            'label' => 'Email address',
+            'rules' => 'required|trim|valid_email|xss_clean'
+		),
+	),
 );
