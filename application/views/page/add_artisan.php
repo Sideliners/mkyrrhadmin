@@ -41,7 +41,7 @@
 
 <div class="clearfix">
     <div class="pull-right">
-        <a href="<?=site_url('artisan/listings');?>" class="btn">Cancel</a>
+        <button type="button" class="btn" onclick="window.history.back()">Cancel</button>
         <button type="submit" class="btn btn-primary" name="save_artisan"><i class="icon-save"></i> Save</button>
     </div>
 </div>

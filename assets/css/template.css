@@ -98,3 +98,7 @@ textarea.limited{ resize: none; }
 #add-product-modal .modal-body{
 	height: 200px !important;
 }
+
+.checkboxes td{
+	vertical-align: middle !important;
+}

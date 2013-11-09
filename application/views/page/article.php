@@ -1,6 +1,6 @@
 <div class="clearfix margin-bottom">
     <div class="pull-left">
-        <a role="button" onclick="window.history.back()" class="btn btn-link">&laquo Back</a>
+        <a role="button" onclick="window.history.back()" class="label label-info  arrowed">&laquo Back</a>
     </div>
 </div>
 

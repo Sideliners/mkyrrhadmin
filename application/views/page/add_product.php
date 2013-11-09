@@ -111,7 +111,7 @@
 
 <div class="clearfix">
 	<div class="pull-right">
-    	<a href="<?=site_url('product/lists');?>" class="btn" role="button">Cancel</a>
+    	<button type="button" class="btn" onclick="window.history.back()">Cancel</button>
     	<button type="submit" class="btn btn-primary" name="save_product"><i class="icon-save"></i> Save</button>
     </div>
 </div>

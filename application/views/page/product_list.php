@@ -44,7 +44,7 @@
                 </thead>
                 <tbody>
                 	<?php foreach($products as $product) { ?>
-                        <tr>
+                        <tr class="checkboxes">
                             <td>
                                 <center>
                                     <input type="checkbox" id="prod-<?=$product->product_id?>" name="product_item[]" value="<?=intval($product->product_id);?>" class="ace product_item"/>
