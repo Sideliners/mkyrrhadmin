@@ -45,7 +45,5 @@
 </div>
 <?php else: ?>
 <p class="alert alert-info">No results found for '<strong><?=$string;?></strong>'</p>
-<p>
-    <a href="<?=site_url('product/lists');?>">&laquo; Back to Products</a>
-</p>
+<p><a href="<?=site_url('product/create');?>" class="btn btn-warning btn-small">Add Product</a></p>
 <?php endif; ?>

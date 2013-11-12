@@ -61,6 +61,8 @@ class Search extends MY_Controller{
 		$artisans = $this->mod_artisan->get_artisans($perpage, $page, $str);
 		$status = 'Unpublished';
 		$data = '';
+
+        if(empty($artisans)) return NULL;
 		
 		foreach($artisans as $row){
 			$data.= '<li class="span3" style="margin-left: 0px; margin-right: 1.5%;">';
@@ -108,10 +110,11 @@ class Search extends MY_Controller{
 			
 			$pagedata = $this->_page_defaults('Enterprises', 'prod_enterprises', 'enterpriseslist');
 
+			$pagedata['string'] = $str;
             $pagedata['enterprises'] = $this->_enterprises($perpage, $page, $str);
             $pagedata['pagination'] = ($total > $perpage)? $this->paginate($url, $total, $perpage) : '';
 
-            $contentdata['page'] = $this->load->view('page/enterprise_list', $pagedata, TRUE);
+            $contentdata['page'] = $this->load->view('page/search_enterprise', $pagedata, TRUE);
 			$this->templateLoader($contentdata);
         }
         else{
