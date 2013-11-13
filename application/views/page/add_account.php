@@ -1,4 +1,3 @@
-<?php echo (isset($response))? $response : ''; ?>
 <?php echo form_open_multipart('', array('method' => 'post', 'class' => 'form-horizontal', 'role' => 'form')); ?>
 <div class="control-group">
 	<label class="control-label" for="user_type">User type</label>
@@ -9,6 +8,7 @@
             <option value="<?=$type->user_type_id;?>" <?php echo set_select('user_type', $type->user_type_id);?>><?=$type->type_name;?></option>
             <?php endforeach; ?>
         </select>
+        <?=form_error('user_type','<span class="label label-danger arrowed">', '</span>');?>
     </div>
 </div>
 
@@ -16,6 +16,7 @@
 	<label class="control-label" for="firstname">First Name</label>
     <div class="controls">
     	<input type="text" name="firstname" id="firstname" value="<?php echo set_value('firstname'); ?>" tabindex="2"/>
+        <?=form_error('firstname','<span class="label label-danger arrowed">', '</span>');?>
     </div>
 </div>
 
@@ -23,6 +24,7 @@
 	<label class="control-label" for="lastname">Last Name</label>
     <div class="controls">
     	<input type="text" name="lastname" id="lastname" value="<?php echo set_value('lastname'); ?>" tabindex="3"/>
+        <?=form_error('lastname','<span class="label label-danger arrowed">', '</span>');?>
     </div>
 </div>
 
@@ -30,6 +32,7 @@
 	<label class="control-label" for="user_email">Email Address</label>
     <div class="controls">
     	<input type="text" name="user_email" id="user_email" value="<?php echo set_value('user_email'); ?>" tabindex="4" />
+        <?=form_error('user_email','<span class="label label-danger arrowed">', '</span>');?>
     </div>
 </div>
 
