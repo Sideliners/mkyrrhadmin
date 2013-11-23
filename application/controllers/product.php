@@ -225,7 +225,7 @@ class Product extends MY_Controller{
 			}
 			
 			$pagedata['collections'] = $this->mod_collection->get_all();
-            $pagedata['artisans'] = $this->mod_artisan->get_artisans(NULL, NULL, "artisan_name", "asc");
+            $pagedata['artisans'] = $this->mod_artisan->get_artisans();
 			
 			$contentdata['page'] = $this->load->view('page/add_product', $pagedata, TRUE);
 			$this->templateLoader($contentdata);

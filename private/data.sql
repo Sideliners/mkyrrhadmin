@@ -1,13 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.4.1
+-- version 3.5.5
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Nov 03, 2013 at 07:47 PM
--- Server version: 5.5.32
--- PHP Version: 5.4.19
+-- Host: localhost
+-- Generation Time: Nov 23, 2013 at 01:28 AM
+-- Server version: 5.5.33-31.1
+-- PHP Version: 5.3.17
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
@@ -19,18 +19,20 @@ SET time_zone = "+00:00";
 --
 -- Database: `mkyrrh_makaya`
 --
-CREATE DATABASE IF NOT EXISTS `mkyrrh_makaya` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-USE `mkyrrh_makaya`;
 
 --
 -- Dumping data for table `article`
 --
 
 INSERT INTO `article` (`article_id`, `article_image`, `article_title`, `article_body`, `article_type_id`, `article_status`, `user_id`, `date_created`, `last_modified`) VALUES
-(4, '15_20131026195144.jpg', 'The Greeny Ballpen', '<p>Lorem ipsum dolor sit amet, saperet expetenda complectitur pro no, graeco doctus eleifend pro ei. Sonet detraxit vis ex, salutandi suscipiantur et mea, quo odio labore temporibus cu. Eu sed ponderum perpetua dissentiunt, pri consequat concludaturque te, te usu wisi scribentur. Magna legendos an his. Iisque luptatum his at, te wisi tincidunt voluptatum has, justo percipit sea et.</p>\r\n<p>Lorem ipsum dolor sit amet, saperet expetenda complectitur pro no, graeco doctus eleifend pro ei. Sonet detraxit vis ex, salutandi suscipiantur et mea, quo odio labore temporibus cu. Eu sed ponderum perpetua dissentiunt, pri consequat concludaturque te, te usu wisi scribentur. Magna legendos an his. Iisque luptatum his at, te wisi tincidunt voluptatum has, justo percipit sea et.</p>\r\n<p>Lorem ipsum dolor sit amet, saperet expetenda complectitur pro no, graeco doctus eleifend pro ei. Sonet detraxit vis ex, salutandi suscipiantur et mea, quo odio labore temporibus cu. Eu sed ponderum perpetua dissentiunt, pri consequat concludaturque te, te usu wisi scribentur. Magna legendos an his. Iisque luptatum his at, te wisi tincidunt voluptatum has, justo percipit sea et.</p>', 1, 0, 1, '2013-10-26 11:51:44', NULL),
-(5, '16_20131027120404.jpg', 'Pink Ballpen Song', '<p>What does the fox say?</p>\n<p class="verse">Ring-ding-ding-ding-dingeringeding!<br /> Gering-ding-ding-ding-dingeringeding!<br /> Gering-ding-ding-ding-dingeringeding!</p>', 1, 0, 1, '2013-10-26 12:17:46', '2013-10-27 17:04:04'),
-(8, '1_20131101152156.jpg', 'GKonomiks The Story', '<p>GKonomics International, Inc. is a non-stock, non-profit organization, incorporated in 2009. We are a Gawad Kalinga partner in social enterprise development.</p>', 3, 0, 1, '2013-11-01 07:21:56', '2013-11-01 07:27:38'),
-(9, '3_20131101170429.jpg', '2GO Philippnines Article', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborumLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborumLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>', 3, 0, 1, '2013-11-01 09:04:29', '2013-11-03 08:58:10');
+(1, '3_20131101170429.jpg', 'Penchang the Creator', '3_20131101170429.jpg', 2, 1, 1, NULL, NULL),
+(2, '3_20131101170429.jpg', 'Jayvz the Great', '3_20131101170429.jpg', 2, 1, 1, NULL, NULL),
+(4, '15_20131026195144.jpg', 'The Greeny Ballpen', '<p>Lorem ipsum dolor sit amet, saperet expetenda complectitur pro no, graeco doctus eleifend pro ei. Sonet detraxit vis ex, salutandi suscipiantur et mea, quo odio labore temporibus cu. Eu sed ponderum perpetua dissentiunt, pri consequat concludaturque te, te usu wisi scribentur. Magna legendos an his. Iisque luptatum his at, te wisi tincidunt voluptatum has, justo percipit sea et.</p>\n<p>Lorem ipsum dolor sit amet, saperet expetenda complectitur pro no, graeco doctus eleifend pro ei. Sonet detraxit vis ex, salutandi suscipiantur et mea, quo odio labore temporibus cu. Eu sed ponderum perpetua dissentiunt, pri consequat concludaturque te, te usu wisi scribentur. Magna legendos an his. Iisque luptatum his at, te wisi tincidunt voluptatum has, justo percipit sea et.</p>\n<p>Lorem ipsum dolor sit amet, saperet expetenda complectitur pro no, graeco doctus eleifend pro ei. Sonet detraxit vis ex, salutandi suscipiantur et mea, quo odio labore temporibus cu. Eu sed ponderum perpetua dissentiunt, pri consequat concludaturque te, te usu wisi scribentur. Magna legendos an his. Iisque luptatum his at, te wisi tincidunt voluptatum has, justo percipit sea et.</p>', 1, 1, 1, '2013-10-26 11:51:44', NULL),
+(5, '16_20131027120404.jpg', 'Pink Ballpen Song', '<p>What does the fox say?</p>\n<p class="verse">Ring-ding-ding-ding-dingeringeding!<br /> Gering-ding-ding-ding-dingeringeding!<br /> Gering-ding-ding-ding-dingeringeding!</p>', 1, 1, 1, '2013-10-26 12:17:46', '2013-10-27 17:04:04'),
+(8, '1_20131101152156.jpg', 'GKonomiks The Story', '<p>GKonomics International, Inc. is a non-stock, non-profit organization, incorporated in 2009. We are a Gawad Kalinga partner in social enterprise development.</p>', 3, 1, 1, '2013-11-01 07:21:56', '2013-11-01 07:27:38'),
+(9, '3_20131101170429.jpg', '2GO Philippnines Article', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborumLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborumLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>', 3, 1, 1, '2013-11-01 09:04:29', '2013-11-03 08:58:10'),
+(10, '7_20131111202415.png', 'The GKonomics', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>', 3, 1, 1, '2013-11-12 02:24:15', NULL),
+(11, '4_20131116031557.jpg', 'Bluish Ballpen', '<p>&lt;p&gt;Lorem ipsum dolor sit amet, saperet expetenda complectitur pro no, graeco doctus eleifend pro ei. Sonet detraxit vis ex, salutandi suscipiantur et mea, quo odio labore temporibus cu. Eu sed ponderum perpetua dissentiunt, pri consequat concludaturque te, te usu wisi scribentur. Magna legendos an his. Iisque luptatum his at, te wisi tincidunt voluptatum has, justo percipit sea et.&lt;/p&gt;</p>\n<p>&lt;p&gt;Lorem ipsum dolor sit amet, saperet expetenda complectitur pro no, graeco doctus eleifend pro ei. Sonet detraxit vis ex, salutandi suscipiantur et mea, quo odio labore temporibus cu. Eu sed ponderum perpetua dissentiunt, pri consequat concludaturque te, te usu wisi scribentur. Magna legendos an his. Iisque luptatum his at, te wisi tincidunt voluptatum has, justo percipit sea et.&lt;/p&gt;</p>\n<p>&lt;p&gt;Lorem ipsum dolor sit amet, saperet expetenda complectitur pro no, graeco doctus eleifend pro ei. Sonet detraxit vis ex, salutandi suscipiantur et mea, quo odio labore temporibus cu. Eu sed ponderum perpetua dissentiunt, pri consequat concludaturque te, te usu wisi scribentur. Magna legendos an his. Iisque luptatum his at, te wisi tincidunt voluptatum has, justo percipit sea et.&lt;/p&gt;</p>', 1, 1, 1, '2013-11-16 09:15:57', NULL);
 
 --
 -- Dumping data for table `article_type`
@@ -54,11 +56,12 @@ INSERT INTO `artisan` (`artisan_id`, `artisan_name`, `artisan_description`, `art
 --
 
 INSERT INTO `artisan_album` (`artisan_album_id`, `artisan_image`, `artisan_id`, `is_primary`, `date_added`) VALUES
-(1, '20130921015223.jpeg', 1, 1, '2013-10-19 10:49:43'),
+(1, '20130921015223.jpeg', 1, 0, '2013-10-19 10:49:43'),
 (2, '20130921015223.jpeg', 2, 0, '2013-10-19 10:49:43'),
 (3, '2_20131027114646.jpg', 2, 1, '2013-10-27 16:46:46'),
 (4, '3_20131103193732.jpg', 3, 1, '2013-11-03 11:37:32'),
-(5, '4_20131103193834.jpg', 4, 1, '2013-11-03 11:38:34');
+(5, '4_20131103193834.jpg', 4, 1, '2013-11-03 11:38:34'),
+(6, '1_20131116060832.jpeg', 1, 1, '2013-11-16 12:08:33');
 
 --
 -- Dumping data for table `artisan_product`
@@ -68,7 +71,6 @@ INSERT INTO `artisan_product` (`ap_id`, `artisan_id`, `product_id`, `date_added`
 (1, 1, 3, '2013-10-19 09:42:21'),
 (2, 1, 4, '2013-10-19 09:42:21'),
 (3, 2, 5, '2013-10-19 09:42:38'),
-(4, 2, 4, '2013-10-19 09:42:21'),
 (7, 1, 15, '2013-10-26 11:21:41'),
 (8, 2, 15, '2013-10-26 11:21:41'),
 (9, 1, 16, '2013-10-26 12:02:09');
@@ -81,6 +83,13 @@ INSERT INTO `collection` (`collection_id`, `collection_name`, `collection_status
 (1, 'Home And Office', 1, NULL, NULL),
 (2, 'House and Lot', 1, '2013-10-14 06:06:57', '0000-00-00 00:00:00'),
 (3, 'Kitchen Showcase', 1, '2013-10-14 06:06:57', '0000-00-00 00:00:00');
+
+--
+-- Dumping data for table `collection_artisan`
+--
+
+INSERT INTO `collection_artisan` (`ca_id`, `collection_id`, `artisan_id`, `date_added`) VALUES
+(1, 3, 1, '2013-11-16 09:13:33');
 
 --
 -- Dumping data for table `collection_enterprise`
@@ -106,14 +115,15 @@ INSERT INTO `collection_product` (`cp_id`, `collection_id`, `product_id`, `date_
 (7, 1, 15, '2013-10-26 11:21:41'),
 (8, 2, 15, '2013-10-26 11:21:41'),
 (9, 3, 15, '2013-10-26 11:21:41'),
-(10, 3, 16, '2013-10-26 12:02:09');
+(10, 3, 16, '2013-10-26 12:02:09'),
+(11, 3, 4, '2013-11-16 12:06:19');
 
 --
 -- Dumping data for table `enterprise`
 --
 
 INSERT INTO `enterprise` (`enterprise_id`, `enterprise_name`, `enterprise_description`, `enterprise_status`, `article_id`, `date_created`, `last_modified`) VALUES
-(7, 'GKonomics', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum', 1, 0, '2013-11-03 11:13:02', NULL),
+(7, 'GKonomics', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum', 1, 10, '2013-11-03 11:13:02', '2013-11-12 02:24:15'),
 (8, '2GO Philippines', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum', 1, 0, '2013-11-03 11:13:25', NULL);
 
 --
@@ -138,19 +148,26 @@ INSERT INTO `enterprise_album` (`enterprise_album_id`, `enterprise_id`, `enterpr
 --
 
 INSERT INTO `enterprise_artisan` (`ea_id`, `enterprise_id`, `artisan_id`, `date_added`) VALUES
-(1, 1, 1, '2013-10-19 09:45:42'),
-(2, 1, 2, '2013-10-19 09:45:42'),
+(1, 7, 1, '2013-11-16 09:07:50'),
+(2, 7, 2, '2013-11-16 09:07:53'),
 (3, 8, 3, '2013-11-03 11:37:32'),
 (4, 8, 4, '2013-11-03 11:38:34');
+
+--
+-- Dumping data for table `feedback`
+--
+
+INSERT INTO `feedback` (`feedback_id`, `feedback_subject`, `feedback_email`, `feedback_message`, `date_added`) VALUES
+(1, 'Good', 'jacyncampasa@yahoo.com', 'Lorem ipsum dolor sit amet, saperet expetenda complectitur pro no, graeco doctus eleifend pro ei. Sonet detraxit vis ex, salutandi suscipiantur et mea, quo odio labore temporibus cu. Eu sed ponderum perpetua dissentiunt, pri consequat concludaturque te, te usu wisi scribentur. Magna legendos an his. Iisque luptatum his at, te wisi tincidunt voluptatum has, justo percipit sea et.', '2013-11-16 11:53:06');
 
 --
 -- Dumping data for table `product`
 --
 
 INSERT INTO `product` (`product_id`, `product_name`, `product_description`, `product_quantity`, `product_status`, `width`, `height`, `length`, `weight`, `price`, `is_highlighted`, `article_id`, `date_created`, `product_last_modified`) VALUES
-(4, 'Blue Ballpen', 'a shiny red ballpen. Lorem ipsum dolor sit amet, saperet expetenda complectitur pro no, graeco doctus eleifend pro ei. Sonet detraxit vis ex, salutandi suscipiantur et mea, quo odio labore temporibus cu. Eu sed ponderum perpetua dissentiunt, pri consequat concludaturque te, te usu wisi scribentur. Magna legendos an his. Iisque luptatum his at, te wisi tincidunt voluptatum has, justo percipit sea et.', 6, 1, 5, 10, 0, 2, '5.25', 0, 1, '2013-10-14 08:23:32', '2013-10-26 09:47:52'),
-(15, 'Green Ballpen', 'Lorem ipsum dolor sit amet, saperet expetenda complectitur pro no, graeco doctus eleifend pro ei. Sonet detraxit vis ex, salutandi suscipiantur et mea, quo odio labore temporibus cu. Eu sed ponderum perpetua dissentiunt, pri consequat concludaturque te, te usu wisi scribentur. Magna legendos an his. Iisque luptatum his at, te wisi tincidunt voluptatum has, justo percipit sea et.', 6, 1, 1, 2, 3, 4, '5.00', 0, 4, '2013-10-26 11:21:41', '2013-10-26 11:51:44'),
-(16, 'Pink Ballpen', 'Lorem ipsum dolor sit amet, saperet expetenda complectitur pro no, graeco doctus eleifend pro ei. Sonet detraxit vis ex, salutandi suscipiantur et mea, quo odio labore temporibus cu. Eu sed ponderum perpetua dissentiunt, pri consequat concludaturque te, te usu wisi scribentur. Magna legendos an his. Iisque luptatum his at, te wisi tincidunt voluptatum has, justo percipit sea et.', 6, 1, 1, 2, 3, 4, '5.00', 0, 5, '2013-10-26 12:02:09', '2013-11-01 09:25:38');
+(4, 'Blue Ballpen', 'a shiny red ballpen. Lorem ipsum dolor sit amet, saperet expetenda complectitur pro no, graeco doctus eleifend pro ei. Sonet detraxit vis ex, salutandi suscipiantur et mea, quo odio labore temporibus cu. Eu sed ponderum perpetua dissentiunt, pri consequat concludaturque te, te usu wisi scribentur. Magna legendos an his. Iisque luptatum his at, te wisi tincidunt voluptatum has, justo percipit sea et.', 6, 1, 5, 10, 0, 2, 5.25, 0, 11, '2013-10-14 08:23:32', '2013-11-16 09:15:57'),
+(15, 'Green Ballpen', 'Lorem ipsum dolor sit amet, saperet expetenda complectitur pro no, graeco doctus eleifend pro ei. Sonet detraxit vis ex, salutandi suscipiantur et mea, quo odio labore temporibus cu. Eu sed ponderum perpetua dissentiunt, pri consequat concludaturque te, te usu wisi scribentur. Magna legendos an his. Iisque luptatum his at, te wisi tincidunt voluptatum has, justo percipit sea et.', 6, 1, 1, 2, 3, 4, 5.00, 0, 4, '2013-10-26 11:21:41', '2013-10-26 11:51:44'),
+(16, 'Pink Ballpen', 'Lorem ipsum dolor sit amet, saperet expetenda complectitur pro no, graeco doctus eleifend pro ei. Sonet detraxit vis ex, salutandi suscipiantur et mea, quo odio labore temporibus cu. Eu sed ponderum perpetua dissentiunt, pri consequat concludaturque te, te usu wisi scribentur. Magna legendos an his. Iisque luptatum his at, te wisi tincidunt voluptatum has, justo percipit sea et.', 6, 0, 1, 2, 3, 4, 5.00, 1, 5, '2013-10-26 12:02:09', '2013-11-20 10:06:36');
 
 --
 -- Dumping data for table `product_album`
@@ -168,8 +185,10 @@ INSERT INTO `product_album` (`product_album_id`, `product_image`, `product_id`, 
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `user_email`, `user_password`, `firstname`, `lastname`, `user_type`, `user_status`, `date_created`, `last_modified`, `access_token`) VALUES
-(1, 'jayvzolazo@gmail.com', 'dfe74cac7654a17b5b717091daec8b2693fe03e1', 'Jayvz', 'Olazo', 1, 1, '2013-10-13 07:58:00', NULL, '22a16d95c5c4470e8be31b0140a0a2c5b47d1b2d');
+INSERT INTO `user` (`user_id`, `user_email`, `user_password`, `firstname`, `lastname`, `user_type`, `user_status`, `date_created`, `last_modified`, `access_token`, `activation_code`) VALUES
+(1, 'jayvzolazo@gmail.com', 'dfe74cac7654a17b5b717091daec8b2693fe03e1', 'Jayvz', 'Olazo', 1, 1, '2013-10-13 07:58:00', NULL, '', ''),
+(13, 'jacyncampasa@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'Jacyn', 'Olazo', 4, 1, '2013-11-16 11:44:40', '2013-11-16 13:11:09', '', '445aa41f688e99e25166bb79972b60eabce9d5b2'),
+(14, 'jacyncampasa@yahoo.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'Jacyn2', 'Campasa2', 4, 1, '2013-11-16 11:51:46', NULL, '', '143b378d6bedfec189455e6efdbf131d5eafda46');
 
 --
 -- Dumping data for table `user_type`

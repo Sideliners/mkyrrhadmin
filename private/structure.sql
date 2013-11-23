@@ -1,13 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.4.1
+-- version 3.5.5
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Nov 03, 2013 at 07:47 PM
--- Server version: 5.5.32
--- PHP Version: 5.4.19
+-- Host: localhost
+-- Generation Time: Nov 23, 2013 at 01:28 AM
+-- Server version: 5.5.33-31.1
+-- PHP Version: 5.3.17
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `mkyrrh_makaya`
 --
-CREATE DATABASE IF NOT EXISTS `mkyrrh_makaya` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-USE `mkyrrh_makaya`;
 
 -- --------------------------------------------------------
 
@@ -40,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `article` (
   `last_modified` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`article_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 -- --------------------------------------------------------
 
@@ -72,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `artisan` (
   PRIMARY KEY (`artisan_id`),
   KEY `article_id` (`article_id`),
   KEY `enterprise_id` (`enterprise_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -87,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `artisan_album` (
   `is_primary` tinyint(1) NOT NULL,
   `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`artisan_album_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
 
 -- --------------------------------------------------------
 
@@ -130,7 +128,7 @@ CREATE TABLE IF NOT EXISTS `collection_artisan` (
   `artisan_id` bigint(20) NOT NULL,
   `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`ca_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -158,7 +156,7 @@ CREATE TABLE IF NOT EXISTS `collection_product` (
   `product_id` bigint(20) NOT NULL,
   `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`cp_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 -- --------------------------------------------------------
 
@@ -252,7 +250,7 @@ CREATE TABLE IF NOT EXISTS `feedback` (
   `feedback_message` longtext NOT NULL,
   `date_added` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`feedback_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -292,7 +290,7 @@ CREATE TABLE IF NOT EXISTS `product_album` (
   `is_primary` tinyint(4) NOT NULL,
   `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`product_album_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 -- --------------------------------------------------------
 
@@ -362,8 +360,9 @@ CREATE TABLE IF NOT EXISTS `user` (
   `date_created` timestamp NULL DEFAULT NULL,
   `last_modified` timestamp NULL DEFAULT NULL,
   `access_token` varchar(100) NOT NULL,
+  `activation_code` varchar(1000) NOT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
 -- --------------------------------------------------------
 
