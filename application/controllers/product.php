@@ -114,51 +114,6 @@ class Product extends MY_Controller{
         }
     }
 	
-    private function product_list($perpage, $page){
-        $products = $this->mod_products->getProducts($perpage, $page);
-        $row = "";
-
-        if($products){
-            foreach($products as $prod){
-                $categories = $this->mod_category->getProdCats($prod->product_id);
-                $row.= "
-                    <tr>
-                        <td>
-                            <center>
-                                <input type=\"checkbox\" id=\"prod-{$prod->product_id}\" name=\"product_item[]\" value=\"{$prod->product_id}\" class=\"ace product_item\" />
-                                <span class=\"lbl\"></span>
-                            </center>
-                        </td>
-                        <td><center><img src=\"".base_url('/uploads/images/products/'.$prod->primary_image)."\" class=\"thumb\" /></center></td>
-                        <td><a href=\"".base_url('product/'.$prod->product_id)."\">{$prod->product_name}</a></td>
-						<td>{$categories}</td>
-						<td>{$prod->product_price}</td>
-                        <td>{$prod->stock}</td>
-                ";
-
-                if($prod->product_status == '0'){
-                    $status = "<span class='muted'>unpublished</span>";
-                }
-                if($prod->product_status == '1'){
-                    $status = "<span class='text-success'>published</span>";
-                }
-
-                $row.= "
-                        <td>{$status}</td>
-                        <td>
-                            <div class=\"text-center\">
-                            </div>
-                        </td>
-                    </tr>
-                ";
-            }
-
-            return $row;
-        }
-
-        return FALSE;
-    }
-	
 	public function create(){
         if($this->user->is_logged_in()){
             $contentdata['script'] = array('admin', 'product', 'jquery.inputlimiter.1.3.1.min', 'chosen.jquery.min');

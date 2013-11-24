@@ -151,5 +151,12 @@ $config = array(
             'label' => 'Email address',
             'rules' => 'required|trim|valid_email|xss_clean'
 		),
-	),
+	), // create account
+	'create_collection' => array(
+		array(
+            'field' => 'collection_name',
+            'label' => 'Collection Name',
+            'rules' => 'required|trim|xss_clean'
+		),
+	) // create collection
 );

@@ -3,7 +3,7 @@
     <li><a href="#"><i class="icon-inbox"></i> Orders</a></li>
     <li><a href="#"><i class="icon-group"></i> Customers</a></li>
 
-    <li class="<?php echo ($page == 'products' || $page == 'prod_articles' || $page == 'prod_artisans' || $page == 'prod_enterprises' || $page == 'artisan_articles' || $page == 'enterprise_articles' )? 'active open' : '';?>">
+    <li class="<?php echo ($page == 'products' || $page == 'prod_articles' || $page == 'prod_artisans' || $page == 'prod_enterprises' || $page == 'artisan_articles' || $page == 'enterprise_articles' || $page == 'collections' )? 'active open' : '';?>">
         <a href="#" class="dropdown-toggle"><i class="icon-tags"></i> Contents <b class="arrow icon-angle-down"></b></a>
         <ul class="submenu">
             <li class="<?php echo ($sub_page == 'productslist')? 'active' : '';?>">
@@ -17,6 +17,12 @@
             </li>
             <li class="<?php echo ($sub_page == 'articlelist' || $sub_page == 'articleview' || $sub_page == 'newarticle') ? 'active' : '';?>">
                 <a href="<?=site_url('article/listings');?>"><i class="icon-double-angle-right"></i> Articles</a>
+            </li>
+            <li class="<?php echo ($sub_page == 'collectionlist' || $sub_page == 'collectionview' || $sub_page == 'newcollection') ? 'active' : '';?>">
+                <a href="<?=site_url('collection/listings');?>"><i class="icon-double-angle-right"></i> Collections</a>
+            </li>
+            <li class="<?php echo ($sub_page == 'pagelist' || $sub_page == 'pageview' || $sub_page == 'newpage') ? 'active' : '';?>">
+                <a href="<?=site_url('page/listings');?>"><i class="icon-double-angle-right"></i> Pages</a>
             </li>
         </ul>
     </li>
