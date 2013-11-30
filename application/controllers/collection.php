@@ -8,7 +8,7 @@ class Collection extends MY_Controller{
 
     public function listings(){
         if($this->user->is_logged_in()){
-			$contentdata['script'] = array('admin', 'collections');
+			$contentdata['script'] = array('admin', 'common', 'collections');
             $contentdata['styles'] = NULL;
 			
             $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
@@ -104,7 +104,7 @@ class Collection extends MY_Controller{
 				$collection = $this->mod_collection->get_collection($collection_id);
 				
 				if(is_object($collection)){
-					$contentdata['script'] = array('admin', 'jquery.inputlimiter.1.3.1.min', 'chosen.jquery.min', 'artisans');
+					$contentdata['script'] = array('admin', 'collections');
                     $contentdata['styles'] = array('chosen');
 
 					$pagedata = $this->_page_defaults('Edit Collection - '. $collection->collection_name, 'collections', 'collectionlist');					
@@ -151,57 +151,23 @@ class Collection extends MY_Controller{
 		if(!$this->input->is_ajax_request()) redirect(site_url('404_override'));
 		
 		if($this->user->is_logged_in()){
-			$artid = $this->input->post('art_id');
+			$id = $this->input->post('id');
 			
 			if(isset($_POST['name'])){
 				$data = $this->input->post('name');
 				
-				if(is_numeric($artid) && is_string($data) && $data != ''){
-					$update = $this->mod_artisan->update_artisan(array('artisan_name' => trim($data)), $artid);
+				if(is_numeric($id) && is_string($data) && $data != ''){
+					$update = $this->mod_collection->update_collection(array('collection_name' => trim($data)), $id);
 					
 					if($update){
-						$jsondata = array('status' => 1, 'response' => 'Artisan\'s name updated');
+						$jsondata = array('status' => 1, 'response' => 'Collection\'s name updated');
 					}
 					else{
-						$jsondata = array('status' => 0, 'response' => 'Failed to update artisan\'s name');
+						$jsondata = array('status' => 0, 'response' => 'Failed to update collection\'s name');
 					}
 				}
 				else{
-					$jsondata = array('status' => 0, 'response' => 'Invalid Parameters');
-				}
-			}
-			elseif(isset($_POST['desc'])){
-				$data = $this->input->post('desc');
-				
-				if(is_numeric($artid) && is_string($data) && !empty($data)){
-					$update = $this->mod_artisan->update_artisan(array('artisan_description' => trim($data)), $artid);
-					
-					if($update){
-						$jsondata = array('status' => 1, 'response' => 'Artisan\'s description updated');
-					}
-					else{
-						$jsondata = array('status' => 0, 'response' => 'Failed to update artisan\'s description');
-					}
-				}
-				else{
-					$jsondata = array('status' => 0, 'response' => 'Invalid Parameters');
-				}
-			}
-			elseif(isset($_POST['entr'])){
-				$data = $this->input->post('entr');
-				
-				if(is_numeric($artid) && is_string($data) && $data != ''){
-					$update = $this->mod_artisan->update_artisan(array('enterprise_id' => trim($data)), $artid);
-					
-					if($update){
-						$jsondata = array('status' => 1, 'response' => 'Artisan\'s enterprise updated');
-					}
-					else{
-						$jsondata = array('status' => 0, 'response' => 'Failed to update artisan\'s enterprise');
-					}
-				}
-				else{
-					$jsondata = array('status' => 0, 'response' => 'Invalid Parameters');
+					$jsondata = array('status' => 0, 'response' => '#2Invalid Parameters');
 				}
 			}
 			else{
@@ -219,18 +185,18 @@ class Collection extends MY_Controller{
 		if(!$this->input->is_ajax_request()) redirect(site_url('404_override'));
 		
 		if($this->user->is_logged_in()){
-			$artisan_id = $this->input->post('artisan_id');
+			$collection_id = $this->input->post('collection_id');
 			
-			if(is_numeric($artisan_id)) {
-				$artisan = $this->mod_artisan->get_artisan($artisan_id);
+			if(is_numeric($collection_id)) {
+				$collection = $this->mod_collection->get_collection($collection_id);
 				
 				// delete artisan
-				$deleted = $this->mod_artisan->delete($artisan_id);				
+				$deleted = $this->mod_collection->delete($collection_id);				
 				if($deleted){
-					$jsondata = array('status' => 1, 'response' => 'Artisan deleted');
+					$jsondata = array('status' => 1, 'response' => 'Collection deleted');
 				}
 				else{
-					$jsondata = array('status' => 0, 'response' => 'Failed to delete artisan');
+					$jsondata = array('status' => 0, 'response' => 'Failed to delete collection');
 				}
 			}
 			else{
@@ -245,64 +211,21 @@ class Collection extends MY_Controller{
 	}
 	
 	public function update_status(){
-		if(!$this->input->is_ajax_request()) redirect(site_url('404_override'));
+		//if(!$this->input->is_ajax_request()) redirect(site_url('404_override'));
 		
 		if($this->user->is_logged_in()){
-			$id = $this->input->post('id');
+			$id = $this->input->post('collection_id');
 			$status = $this->input->post('status');
 			
 			if(is_numeric($id) && is_numeric($status)){
-				$update = $this->mod_artisan->update_artisan(array('artisan_status' => $status), $id);
+				$update = $this->mod_collection->update_collection(array('collection_status' => $status), $id);
 				
 				if($update){
-					$jsondata = array('status' => 1, 'response' => 'Artisan\'s status updated');
+					$jsondata = array('status' => 1, 'response' => 'Collection\'s status updated');
 				}
 				else{
-					$jsondata = array('status' => 0, 'response' => 'Failed to update artisan\'s status');
+					$jsondata = array('status' => 0, 'response' => 'Failed to update collection\'s status');
 				}
-				
-				/*if ($artisan = $this->mod_artisan->get_artisan($id)) {
-					if ($artisan->article_id > 0) {
-						if(is_numeric($status)){
-							$response = $this->mod_artisan->update_artisan(array('artisan_status' => $status), $id);
-							
-							if($response){
-								$products = 0;
-								$articles = 0;
-								if ($artisan_products = $this->mod_artisan->get_artisan_products($id)) {
-									foreach ($artisan_products as $product) {
-										if ($article = $this->mod_articles->get_article($product->article_id)) {											
-											if ( $this->mod_articles->update_article( array( 'status' => $status ), $article->article_id ) ) {												
-												if ($this->mod_products->update_prod(array('product_status' => $status), $product->product_id)) {
-													$products++;
-												}
-											}
-										}
-									}
-								}
-								
-								if ($article = $this->mod_articles->get_article($artisan->article_id)) {
-									if ( $this->mod_articles->update_article( array( 'status' => $status ), $article->article_id ) ) {
-										$articles++;
-									}
-								}								
-								$jsondata = array('status' => 1, 'response' => 'Artisan\'s status updated. Related Items Updated: ' . $articles . ' articles, ' . $products . ' products');
-							}
-							else{
-								$jsondata = array('status' => 0, 'response' => 'Failed to update artisan\'s status');
-							}
-						}
-						else{
-							$jsondata = array('status' => 0, 'response' => 'Invalid Parameters');
-						}
-					}
-					else {
-						$jsondata = array('status' => 0, 'response' => 'Please provide an article for this artisan');
-					}
-				}
-				else {
-					$jsondata = array('status' => 0, 'response' => 'Hacker Detected!');
-				}*/
 			}
 			else{
 				$jsondata = array('status' => 0, 'response' => 'Invalid Parameters');

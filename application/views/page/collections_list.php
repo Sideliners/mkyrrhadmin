@@ -73,3 +73,5 @@
 <?php else: ?>
 <p class="alert alert-info">No Collections, <a href="<?=site_url('collection/create')?>">Add Now</a></p>
 <?php endif; ?>    
+
+<?=$this->load->view('template/modals/collection_modal')?>

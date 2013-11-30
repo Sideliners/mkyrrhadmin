@@ -7,7 +7,7 @@
         <?php else: ?>
     	<a role="button" class="btn btn-mini btn-success status-button" data-status="1" data-status-type="collection"  data-status-id="<?=$collection->collection_id;?>"><i class="icon-ok"></i> Publish this collection</a>
         <?php endif; ?>
-        <a href="#delete-collection" data-toggle="modal" role="button" class="btn btn-mini btn-warning delete-collection" data-artisan-id="<?=$collection->collection_id;?>"><i class="icon-trash"></i>Delete this collection</a>
+        <a href="#delete-collection" data-toggle="modal" role="button" class="btn btn-mini btn-warning delete-collection" data-collection-id="<?=$collection->collection_id;?>"><i class="icon-trash"></i>Delete this collection</a>
     </div>
 </div>
 <br />
@@ -21,7 +21,7 @@
         
         <br />
         <h5 class="border-bottom">
-            Collection of Products 
+            Products 
         </h5>
         <div class="margin-bottom">
         	<?php if ($collection_product):
@@ -36,7 +36,7 @@
         
         <br />
         <h5 class="border-bottom">
-            Collection of Artisans 
+            Artisans 
         </h5>
         <div class="margin-bottom">
         	<?php if ($collection_artisan):
@@ -51,7 +51,7 @@
  
         <br />
         <h5 class="border-bottom">
-            Collection of Enterprises 
+            Enterprises 
         </h5>
         <div class="margin-bottom">
         	<?php if ($collection_enterprise):
@@ -66,3 +66,4 @@
  
     </div>
 </div>
+<?=$this->load->view('template/modals/single_collection_modal')?>

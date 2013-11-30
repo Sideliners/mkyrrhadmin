@@ -134,7 +134,24 @@ class Mod_collection extends CI_Model{
 		if($query->num_rows() > 0) return $query->result();
 		
 		return FALSE;
+	}	
+		
+	function update_collection($data, $id){
+		$data['last_modified'] = date('Y-m-d H:i:s');
+		
+		$this->db->where('collection_id', $id);
+		$update = $this->db->update($this->collection, $data);
+		
+		if($update) return TRUE;
+		
+		return FALSE;
 	}
-	
-	
+		
+	function delete($id){	
+			
+		$this->db->where('collection_id', $id);
+		$query = $this->db->delete($this->collection);
+		
+		return $this->db->affected_rows();
+	}
 }

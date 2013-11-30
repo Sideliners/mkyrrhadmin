@@ -45,6 +45,9 @@ $(function(){
             }, function(data){
                 if(data.status == 1){
                     $('#prodConfirmModal .modal-body .modal-message').html('<p class="alert alert-success"><i class="icon-info"></i> '+ data.response +'</p>');
+					$('#prodConfirmModal').on('hidden', function() {
+						window.location = site_url + 'product/lists';
+					});
                 }
                 else if(data.status == 2){
                     alert(data.response);
