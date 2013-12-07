@@ -80,4 +80,13 @@ class Mod_page extends CI_Model{
 		
 		return $this->db->affected_rows();
 	}
+	
+	function get_total_search($str){
+        $this->db->select('*');
+        $this->db->from($this->page);
+        
+        $this->db->like("{$this->page}.page_name", $str);
+		$query = $this->db->get();
+        return $query->num_rows();
+    }
 }

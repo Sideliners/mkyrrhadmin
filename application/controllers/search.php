@@ -5,7 +5,6 @@ class Search extends MY_Controller{
     public function __construct(){
         parent::__construct();
     }
-
     public function products(){
         if($this->user->is_logged_in()){
             $contentdata['script'] = array('admin', 'prod_list', 'common');
@@ -183,4 +182,54 @@ class Search extends MY_Controller{
             $this->load->view('page/login');
         }
 	}
+	
+	public function collection(){
+        if($this->user->is_logged_in()){
+            $contentdata['script'] = array('admin', 'collections', 'common');
+            $contentdata['styles'] = NULL;
+
+            $str = $this->input->post('search');
+            $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+            $perpage = 10;
+            $url = base_url('search/collection');
+            $total = $this->mod_collection->get_total_search($str);
+			
+			$pagedata = $this->_page_defaults('Search Result : Collections', 'collections', 'collectionlist');
+			
+			$pagedata['string'] = $str;
+            $pagedata['collections'] = $this->mod_collection->get_collections($perpage, $page, $str);
+            $pagedata['pagination'] = ($total > $perpage)? $this->paginate($url, $total, $perpage) : '';
+
+            $contentdata['page'] = $this->load->view('page/search_collections', $pagedata, TRUE);
+			$this->templateLoader($contentdata);
+        }
+        else{
+            $this->load->view('page/login');
+        }
+    }
+	
+	public function page(){
+        if($this->user->is_logged_in()){
+            $contentdata['script'] = array('admin', 'pages', 'common');
+            $contentdata['styles'] = NULL;
+
+            $str = $this->input->post('search');
+            $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+            $perpage = 10;
+            $url = base_url('search/page');
+            $total = $this->mod_page->get_total_search($str);
+			
+			$pagedata = $this->_page_defaults('Search Result : Pages', 'pages', 'pagelist');
+			
+			$pagedata['string'] = $str;
+            $pagedata['pages'] = $this->mod_page->get_pages($perpage, $page, $str);
+            $pagedata['pagination'] = ($total > $perpage)? $this->paginate($url, $total, $perpage) : '';
+
+            $contentdata['page'] = $this->load->view('page/search_pages', $pagedata, TRUE);
+			$this->templateLoader($contentdata);
+        }
+        else{
+            $this->load->view('page/login');
+        }
+    }
 }

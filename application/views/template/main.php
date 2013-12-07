@@ -43,7 +43,9 @@
 								'productslist',
 								'articlelist',
 								'artisanslist',
-								'enterpriseslist'
+								'enterpriseslist',
+								'collectionlist',
+								'pagelist'
 							);
 							?>
                             <?php if(in_array($sub_page, $subpage_array)): ?>
@@ -55,6 +57,8 @@
 								if($sub_page == 'articlelist'){ $method = 'articles'; }
 								if($sub_page == 'artisanslist'){ $method = 'artisans'; }
 								if($sub_page == 'enterpriseslist'){ $method = 'enterprise'; }
+								if($sub_page == 'collectionlist'){ $method = 'collection'; }
+								if($sub_page == 'pagelist'){ $method = 'page'; }
 								?>
                                 <?=form_open('search/'.$method, array('class' => 'no-margin input-append'));?>
                                     <input type="text" name="search" id="search" placeholder="search <?=$method;?>" required />

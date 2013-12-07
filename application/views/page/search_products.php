@@ -7,12 +7,6 @@
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
-                <th width="30">
-                    <center>
-                        <input type="checkbox" id="check_all" class="ace" onchange="checkAll('productlist')" />
-                        <span class="lbl"></span>
-                    </center>
-                </th>
                 <th>Image</th>
                 <th>Product</th>
                 <th>Price</th>
@@ -22,13 +16,7 @@
         </thead>
         <tbody>
             <?php foreach($products as $product) { ?>
-                <tr class="checkboxes">
-                    <td>
-                        <center>
-                            <input type="checkbox" id="prod-<?=$product->product_id?>" name="product_item[]" value="<?=intval($product->product_id);?>" class="ace product_item"/>
-                            <span class="lbl"></span>
-                        </center>
-                    </td>
+                <tr>
                     <td><center><img src="<?=base_url('uploads/images/products/'.$product->product_image);?>" class="thumb" alt="<?=$product->product_image;?>"/></center></td>
                     <td><a href="<?=site_url('product/'.$product->product_id)?>"><?=$product->product_name;?></a></td>
                     <td><?=number_format($product->price, 2);?></td>

@@ -153,5 +153,14 @@ class Mod_collection extends CI_Model{
 		$query = $this->db->delete($this->collection);
 		
 		return $this->db->affected_rows();
-	}
+	}	
+	
+    function get_total_search($str){
+        $this->db->select('*');
+        $this->db->from($this->collection);
+        
+        $this->db->like("{$this->collection}.collection_name", $str);
+		$query = $this->db->get();
+        return $query->num_rows();
+    }
 }
