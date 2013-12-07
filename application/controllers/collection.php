@@ -64,10 +64,8 @@ class Collection extends MY_Controller{
             $contentdata['styles'] = array('chosen');
 
             if(isset($_POST['save_collection'])){
-				
-				echo 1;
+			
 				if($this->form_validation->run('create_collection') == FALSE){
-					echo 2;
 					$pagedata['error'] = validation_errors('<div class="alert alert-error">', '</div>');
 				}
 				else{
@@ -130,23 +128,6 @@ class Collection extends MY_Controller{
         }
 	}
 	
-	private function upload_image($id){
-		$config['file_name'] = $id.'_'.date('YmdHis');
-		$config['upload_path'] = $this->config->item('artisans_upload_path');
-		$config['allowed_types'] = 'gif|jpg|pjpeg|jpeg|png|x-png';
-		$config['max_size']	= '1024';
-		$config['max_width']  = '1024';
-		$config['max_height']  = '768';
-		
-		$this->load->library('upload', $config);
-		
-		if($this->upload->do_upload('artisan_image')){
-			return array('status' => TRUE, 'response' => (object)$this->upload->data());
-		}
-		
-		return array('status' => FALSE, 'response' => $this->upload->display_errors('<div class="alert alert-error">', '</div>'));
-	}
-	
 	public function update(){
 		if(!$this->input->is_ajax_request()) redirect(site_url('404_override'));
 		
@@ -167,7 +148,7 @@ class Collection extends MY_Controller{
 					}
 				}
 				else{
-					$jsondata = array('status' => 0, 'response' => '#2Invalid Parameters');
+					$jsondata = array('status' => 0, 'response' => 'Invalid Parameters');
 				}
 			}
 			else{
@@ -211,7 +192,7 @@ class Collection extends MY_Controller{
 	}
 	
 	public function update_status(){
-		//if(!$this->input->is_ajax_request()) redirect(site_url('404_override'));
+		if(!$this->input->is_ajax_request()) redirect(site_url('404_override'));
 		
 		if($this->user->is_logged_in()){
 			$id = $this->input->post('collection_id');

@@ -158,5 +158,22 @@ $config = array(
             'label' => 'Collection Name',
             'rules' => 'required|trim|xss_clean'
 		),
-	) // create collection
+	), // create collection
+	'create_page' => array(
+		array(
+            'field' => 'page_name',
+            'label' => 'Page Name',
+            'rules' => 'required|trim|xss_clean'
+		),
+		array(
+            'field' => 'page_description',
+            'label' => 'Page Description',
+            'rules' => 'required|trim|xss_clean'
+		),
+		array(
+            'field' => 'page_body',
+            'label' => 'Page Body',
+            'rules' => 'required|trim|xss_clean'
+		),
+	), // create page
 );

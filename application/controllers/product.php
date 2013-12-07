@@ -59,7 +59,7 @@ class Product extends MY_Controller{
 	}
 	
 	public function lists(){		
-        if($this->user->is_logged_in()){			
+        if($this->user->is_logged_in()){
             $contentdata['script'] = array('admin', 'prod_list', 'common');
             $contentdata['styles'] = NULL;
             
