@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.32, for Win32 (x86)
+-- MySQL dump 10.13  Distrib 5.5.34, for Win32 (x86)
 --
 -- Host: localhost    Database: mkyrrh_makaya
 -- ------------------------------------------------------
--- Server version	5.5.32
+-- Server version	5.5.34
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -278,6 +278,26 @@ CREATE TABLE `feedback` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `page`
+--
+
+DROP TABLE IF EXISTS `page`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `page` (
+  `page_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `page_name` varchar(100) NOT NULL,
+  `page_description` varchar(300) NOT NULL,
+  `page_body` varchar(5000) NOT NULL,
+  `page_status` tinyint(4) NOT NULL,
+  `user_id` bigint(20) NOT NULL,
+  `date_created` timestamp NULL DEFAULT NULL,
+  `last_modified` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`page_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `product`
 --
 
@@ -424,4 +444,4 @@ CREATE TABLE `user_type` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-12-07 17:13:20
+-- Dump completed on 2013-12-07 17:35:48

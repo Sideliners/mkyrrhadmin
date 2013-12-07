@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.32, for Win32 (x86)
+-- MySQL dump 10.13  Distrib 5.5.34, for Win32 (x86)
 --
 -- Host: localhost    Database: mkyrrh_makaya
 -- ------------------------------------------------------
--- Server version	5.5.32
+-- Server version	5.5.34
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -426,6 +426,36 @@ INSERT INTO `feedback` VALUES (1,'Good','jacyncampasa@yahoo.com','Lorem ipsum do
 UNLOCK TABLES;
 
 --
+-- Table structure for table `page`
+--
+
+DROP TABLE IF EXISTS `page`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `page` (
+  `page_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `page_name` varchar(100) NOT NULL,
+  `page_description` varchar(300) NOT NULL,
+  `page_body` varchar(5000) NOT NULL,
+  `page_status` tinyint(4) NOT NULL,
+  `user_id` bigint(20) NOT NULL,
+  `date_created` timestamp NULL DEFAULT NULL,
+  `last_modified` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`page_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `page`
+--
+
+LOCK TABLES `page` WRITE;
+/*!40000 ALTER TABLE `page` DISABLE KEYS */;
+INSERT INTO `page` VALUES (1,'About Us','This is the about us page.','<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ac augue et diam feugiat elementum vitae nec nisi. Aenean in turpis sit amet diam congue lobortis eu et turpis. Cras eros augue, iaculis et urna vitae, adipiscing sollicitudin nisi. Morbi pulvinar interdum augue, vitae viverra lacus. Aenean tincidunt sodales nunc a hendrerit. Donec pretium porta lacus, ut luctus arcu sollicitudin vitae. Quisque eget hendrerit nunc, eu sodales nibh. Maecenas dictum, augue ultricies ultricies pharetra, diam nisi tincidunt nibh, vitae bibendum urna leo in eros. Vestibulum felis tortor, feugiat a neque at, bibendum posuere nulla. In id nulla quis nibh hendrerit sagittis. Vestibulum blandit, tellus et convallis bibendum, lorem velit adipiscing enim, ut ornare metus urna sit amet libero. Aenean ut sapien sed enim placerat ultrices sed eget ligula. Aliquam convallis elit et massa vehicula, at tincidunt magna sodales. Morbi bibendum lacus at eros porttitor, quis scelerisque magna sollicitudin. Donec vel ipsum in nisi faucibus feugiat. Nulla congue, sem non posuere tempor, eros ipsum ornare lacus, eu lobortis dolor sem vitae nulla. Nullam accumsan ligula sit amet lacus dictum, id lobortis ipsum cursus. Ut tincidunt aliquet elit in sagittis. Aliquam a lacus sed diam interdum venenatis non id erat. Aliquam eget luctus nisi, vel fermentum turpis. Morbi placerat nulla sed bibendum consectetur. Ut eu mi at est malesuada sodales a ultricies quam. Maecenas at metus in massa convallis venenatis ac blandit ligula. Aliquam erat volutpat. Nullam id convallis lorem, vitae lacinia neque. Aliquam erat volutpat. Cras tincidunt id velit tincidunt mollis. Phasellus quis urna nibh. Ut neque urna, rhoncus nec odio quis, pharetra sollicitudin neque. Integer vestibulum massa sem, sit amet vehicula nunc vestibulum ut. Donec quis lacinia lacus, et venenatis mi. Duis ac consectetur leo. Etiam euismod, felis nec placerat gravida, leo sapien sollicitudin orci, at malesuada ligula nulla tempus massa. Quisque velit erat, pretium in laoreet vitae, fringilla ac tellus. Duis ut dictum felis. Ut sed sem nibh. Donec viverra auctor libero, at aliquam lorem laoreet tincidunt. Nullam accumsan est dolor, vitae mattis neque placerat nec. Phasellus tortor libero, posuere malesuada auctor eu, eleifend et leo. Donec aliquet lobortis imperdiet. Ut scelerisque justo eget sapien pretium adipiscing. Maecenas nunc sem, semper volutpat ligula vulputate, fringilla interdum orci. Quisque vel convallis augue. Ut et purus sed odio interdum placerat vel vel tortor. Donec mattis, arcu id tempus feugiat, diam diam auctor sapien, sed elementum enim felis in ante. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec vitae nisl at sapien consectetur semper id sit amet leo. Donec viverra sit amet sem non sollicitudin. Duis convallis odio justo, a faucibus odio bibendum eget. Fusce vestibulum, turpis ut porta fringilla, magna sapien vestibulum nisi, at porta dolor odio eu risus. Vestibulum facilisis nulla ac lorem feugiat auctor. Duis eu ligula ut augue laoreet auctor. Curabitur in massa rhoncus, facilisis lorem ut, cursus justo. Vestibulum nec justo mauris</p>',0,1,'2013-12-07 02:33:08','2013-12-07 02:33:26'),(3,'Test','Test','<p>Test</p>',0,1,'2013-12-07 02:34:06',NULL);
+/*!40000 ALTER TABLE `page` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `product`
 --
 
@@ -602,7 +632,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'jayvzolazo@gmail.com','dfe74cac7654a17b5b717091daec8b2693fe03e1','Jayvz','Olazo',1,1,'2013-10-13 07:58:00',NULL,'6684691d825c3b3e9b737162c5f8774ee5bfc5bd',''),(13,'jacyncampasa@gmail.com','7c4a8d09ca3762af61e59520943dc26494f8941b','Jacyn','Olazo',4,1,'2013-11-16 11:44:40','2013-11-16 13:11:09','','445aa41f688e99e25166bb79972b60eabce9d5b2'),(14,'jacyncampasa@yahoo.com','7c4a8d09ca3762af61e59520943dc26494f8941b','Jacyn2','Campasa2',4,1,'2013-11-16 11:51:46',NULL,'','143b378d6bedfec189455e6efdbf131d5eafda46');
+INSERT INTO `user` VALUES (1,'jayvzolazo@gmail.com','dfe74cac7654a17b5b717091daec8b2693fe03e1','Jayvz','Olazo',1,1,'2013-10-13 07:58:00',NULL,'5694e8106764b85e4d7d778fe597619af1c219c9',''),(13,'jacyncampasa@gmail.com','7c4a8d09ca3762af61e59520943dc26494f8941b','Jacyn','Olazo',4,1,'2013-11-16 11:44:40','2013-11-16 13:11:09','','445aa41f688e99e25166bb79972b60eabce9d5b2'),(14,'jacyncampasa@yahoo.com','7c4a8d09ca3762af61e59520943dc26494f8941b','Jacyn2','Campasa2',4,1,'2013-11-16 11:51:46',NULL,'','143b378d6bedfec189455e6efdbf131d5eafda46');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -639,4 +669,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-12-07 17:13:46
+-- Dump completed on 2013-12-07 17:36:03
