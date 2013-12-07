@@ -112,6 +112,19 @@ $(function(){
 		}
 	});
 
-	
+	$(".clean-name").on('keyup', function(){
+		string_value = $(this).val();
+		output_destination = "#" + $(this).attr('clean-name-output');
+		
+		$.post(site_url + 'page/clean_url', {
+				string : string_value
+			}, function(data){
+				if(data.clean_url){
+					$(output_destination).val(data.clean_url);
+					url = site_url + data.clean_url;
+					$("#display-url").text(url);
+				}
+			}, 'json');
+	});
 	
 });

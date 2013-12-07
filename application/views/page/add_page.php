@@ -11,7 +11,13 @@
         <div>
             <label for="page_name">Page Name <?=form_error('page_name','<span class="label label-danger arrowed">', '</span>');?></label>
             <div>
-                <input type="text" class="input-block-level" id="page_name" name="page_name" value="<?php echo set_value('page_name'); ?>" autofocus  />
+                <input type="text" class="input-block-level clean-name" clean-name-output="page_uri" id="page_name" name="page_name" value="<?php echo set_value('page_name'); ?>" autofocus  />
+            </div>
+        </div>
+		<div>
+            <label for="page_uri">Page URI <strong><span id="display-url"></span></strong> <?=form_error('page_uri','<span class="label label-danger arrowed">', '</span>');?></label>
+            <div>				
+                <input type="text" class="input-block-level" id="page_uri" name="page_uri" value="<?php echo set_value('page_uri'); ?>" />
             </div>
         </div>
         <div>

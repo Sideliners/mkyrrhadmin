@@ -166,6 +166,11 @@ $config = array(
             'rules' => 'required|trim|xss_clean'
 		),
 		array(
+            'field' => 'page_uri',
+            'label' => 'Page URI',
+            'rules' => 'required|trim|xss_clean'
+		),
+		array(
             'field' => 'page_description',
             'label' => 'Page Description',
             'rules' => 'required|trim|xss_clean'
@@ -174,6 +179,6 @@ $config = array(
             'field' => 'page_body',
             'label' => 'Page Body',
             'rules' => 'required|trim|xss_clean'
-		),
+		),		
 	), // create page
 );

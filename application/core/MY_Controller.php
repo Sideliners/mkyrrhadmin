@@ -148,4 +148,14 @@ class MY_Controller extends CI_Controller{
 	
 	function _sendEmail(){
 	}
+	
+	function clean_string($string) {
+		$cleaned_string = trim($string); 
+        $cleaned_string = preg_replace('/\s/','-', $cleaned_string);
+        $cleaned_string = strtolower( $cleaned_string );
+        $cleaned_string = preg_replace('/&/','and', $cleaned_string);
+        $cleaned_string = preg_replace('/[^a-z0-9-]/','', $cleaned_string);
+
+        return $cleaned_string;
+    }
 }

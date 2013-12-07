@@ -72,6 +72,7 @@ class Page extends MY_Controller{
 					
 					$page_data = array(
 						'page_name' => $this->input->post('page_name'),
+						'page_uri' => $this->input->post('page_uri'),
 						'page_description' => $this->input->post('page_description'),
 						'page_body' => $this->input->post('page_body'),
 						'user_id' => $this->_user->user_id,
@@ -251,5 +252,14 @@ class Page extends MY_Controller{
 		}
 		
 		echo json_encode($jsondata);
+	}
+	
+	function clean_url() {
+	
+		$string = $this->input->post('string');
+		$data = array(
+					"clean_url" => $this->clean_string($string)
+				);
+		echo json_encode($data);
 	}
 }
