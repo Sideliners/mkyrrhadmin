@@ -89,6 +89,8 @@ class Mod_enterprise extends CI_Model{
 	}
 	
 	function add_enterprise($data){
+		$data['date_created'] = date('Y-m-d H:i:s');
+		
 		$this->db->insert($this->enterprise, $data);
 		
 		return $this->db->insert_id();

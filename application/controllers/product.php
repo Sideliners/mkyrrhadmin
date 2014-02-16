@@ -137,8 +137,7 @@ class Product extends MY_Controller{
 						'height'							=> $this->input->post('product_height'),
 						'length'							=> $this->input->post('product_length'),
 						'weight'						=> $this->input->post('product_weight'),
-						'price'							=> $this->input->post('product_price'),
-						'date_created'				=> date('Y-m-d H:i:s')
+						'price'							=> $this->input->post('product_price')
 					);
 					$product_id = $this->mod_product->add($prod_data);
 					

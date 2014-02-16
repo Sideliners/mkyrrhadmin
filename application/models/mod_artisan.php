@@ -87,6 +87,7 @@ class Mod_artisan extends CI_Model{
     }
 	
 	function add_artisan($data){
+		$data['date_created'] = date('Y-m-d H:i:s');
 		$this->db->insert($this->artisan, $data);
 		
 		return $this->db->insert_id();

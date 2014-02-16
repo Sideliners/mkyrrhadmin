@@ -172,8 +172,7 @@ class Enterprise extends MY_Controller{
 					$data = array(
 						'enterprise_name' => $this->input->post('enterprise_name'),
 						'enterprise_description' => $this->input->post('enterprise_description'),
-						'enterprise_status' => 1,
-						'date_created' => date('Y-m-d H:i:s')
+						'enterprise_status' => 1
 					);
 					
 					$enterprise_id = $this->mod_enterprise->add_enterprise($data);

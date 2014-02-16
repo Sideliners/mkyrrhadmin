@@ -46,6 +46,8 @@ class Mod_page extends CI_Model{
     }	
 	
 	function add_page($data){
+		$data['date_created'] = date('Y-m-d H:i:s');
+		
 		$this->db->insert($this->page, $data);
 		
 		return $this->db->insert_id();

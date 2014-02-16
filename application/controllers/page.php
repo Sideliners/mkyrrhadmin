@@ -75,8 +75,7 @@ class Page extends MY_Controller{
 						'page_uri' => $this->input->post('page_uri'),
 						'page_description' => $this->input->post('page_description'),
 						'page_body' => $this->input->post('page_body'),
-						'user_id' => $this->_user->user_id,
-						'date_created' => date('Y-m-d H:i:s')
+						'user_id' => $this->_user->user_id
 					);					
 					
 					$page_id = $this->mod_page->add_page($page_data);					

@@ -115,6 +115,8 @@ class Mod_product extends CI_Model{
     }
 		
 	function add($data){
+		$data['date_created'] = date('Y-m-d H:i:s');
+		
 		$this->db->insert($this->product, $data);
 		
 		return $this->db->insert_id();
