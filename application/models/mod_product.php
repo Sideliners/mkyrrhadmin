@@ -16,8 +16,9 @@ class Mod_product extends CI_Model{
 		$this->db->cache_off();
 		
         $this->db->select("*");
+		
 		$this->db->from($this->product);
-		$this->db->join($this->product_album, "{$this->product_album}.product_id = {$this->product}.product_id", 'right');
+		$this->db->join($this->product_album, "{$this->product_album}.product_id = {$this->product}.product_id", 'left');
 		
 		$this->db->where("{$this->product_album}.is_primary", 1);
 

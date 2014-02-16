@@ -1,4 +1,9 @@
 $(function(){
+	tinymce.init({
+		selector	: 'textarea.content-description',
+		menubar	: false
+	});
+
 	$('.single').ace_file_input({
 		no_file:'No File ...',
 		btn_choose:'Choose',
@@ -14,11 +19,13 @@ $(function(){
 	
     $(".chosen-select").chosen();
 
+	/*
     $('textarea.limited').inputlimiter({
         remText: '%n character%s remaining...',
         limitText: 'max allowed : %n.'
     });
-
+	*/
+	
     $(".product_image").ace_file_input({
         style : 'well',
         no_file: 'No file...',

@@ -7,7 +7,7 @@
         <a href="#" class="dropdown-toggle"><i class="icon-tags"></i> Contents <b class="arrow icon-angle-down"></b></a>
         <ul class="submenu">
             <li class="<?php echo ($sub_page == 'productslist')? 'active' : '';?>">
-                <a href="<?=site_url('product/lists');?>"><i class="icon-double-angle-right"></i> Products</a>
+                <a href="<?=site_url('product/listings');?>"><i class="icon-double-angle-right"></i> Products</a>
             </li>
             <li class="<?php echo ($sub_page == 'artisanslist')? 'active' : '';?>">
                 <a href="<?=site_url('artisan/listings');?>"><i class="icon-double-angle-right"></i> Artisans</a>
@@ -19,7 +19,7 @@
                 <a href="<?=site_url('article/listings');?>"><i class="icon-double-angle-right"></i> Articles</a>
             </li>
             <li class="<?php echo ($sub_page == 'collectionlist' || $sub_page == 'collectionview' || $sub_page == 'newcollection') ? 'active' : '';?>">
-                <a href="<?=site_url('collection/listings');?>"><i class="icon-double-angle-right"></i> Collections</a>
+                <a href="<?=site_url('collection/listings');?>"><i class="icon-double-angle-right"></i> Collections / Themes</a>
             </li>
             <li class="<?php echo ($sub_page == 'pagelist' || $sub_page == 'pageview' || $sub_page == 'newpage') ? 'active' : '';?>">
                 <a href="<?=site_url('page/listings');?>"><i class="icon-double-angle-right"></i> Pages</a>

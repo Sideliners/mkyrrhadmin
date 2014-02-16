@@ -11,18 +11,19 @@ $config = array(
             'field' => 'product_item[]',
             'label' => 'Item',
             'rules' => 'required|trim|xss_clean'
-		),// batch_action_product
-	),
+		),
+	),// batch_action_product
+	
     'create_product' => array(
         array(
             'field' => 'product_name',
             'label' => 'Product Name',
-            'rules' => 'required|trim|xss_clean'
+            'rules' => 'required|trim|prep_for_form|xss_clean'
         ),
         array(
             'field' => 'prod_desc',
             'label' => 'Product Description',
-            'rules' => 'required|trim|xss_clean'
+            'rules' => 'required|trim|prep_for_form|xss_clean'
         ),
         array(
             'field' => 'theme_name[]',
@@ -62,9 +63,10 @@ $config = array(
         array(
             'field' => 'product_quantity',
             'label' => 'SKU',
-            'rules' => 'required|numeric|trim|xss_clean'
+            'rules' => 'required|alpha_dash|prep_for_form|trim|xss_clean'
         ),
     ), // create_product
+	
     'create_article' => array(
         array(
             'field' => 'article_title',
@@ -77,16 +79,17 @@ $config = array(
             'rules' => 'required|trim|xss_clean'
         ),
     ), // create_article
+	
 	'create_artisan' => array(
 		array(
             'field' => 'artisan_name',
             'label' => 'Artisan Name',
-            'rules' => 'required|trim|xss_clean'
+            'rules' => 'required|trim|prep_for_form|xss_clean'
 		),
 		array(
             'field' => 'artisan_description',
             'label' => 'Artisan Description',
-            'rules' => 'required|trim|xss_clean'
+            'rules' => 'required|trim|prep_for_form|xss_clean'
 		),
 		array(
             'field' => 'enterprise[]',
@@ -94,6 +97,7 @@ $config = array(
             'rules' => 'required|trim|xss_clean'
 		),
 	),//create_artisan
+	
 	'add_artisan_product' => array(
 		array(
 			'field' => 'product_list[]',

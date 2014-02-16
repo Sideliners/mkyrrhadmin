@@ -189,7 +189,7 @@ class Artisan extends MY_Controller{
             $pagedata['sub_page'] = 'artisanslist';
             $pagedata['user'] = $this->_user;
 
-            $contentdata['script'] = array('admin', 'artisans', 'chosen.jquery.min', 'jquery.inputlimiter.1.3.1.min');
+            $contentdata['script'] = array('admin', 'chosen.jquery.min', 'tinymce/tinymce.min', 'artisans');
             $contentdata['styles'] = array('chosen');
 
             if(isset($_POST['save_artisan'])){
@@ -217,10 +217,13 @@ class Artisan extends MY_Controller{
 						$upload = (object)$this->upload_image($artisan_id);
 						
 						if($upload->status){
+							// reset all current artisan image
+							$this->mod_artisan->reset_image($artisan_id);
 							$add_image = $this->mod_artisan->add_photo(array('artisan_image ' => $upload->response->file_name, 'artisan_id' => $artisan_id, 'is_primary' => 1));
 							
 							if($add_image){
 								$pagedata['response'] = '<div class="alert alert-success">Artisan Added!</div>';
+								redirect(current_url().'?q=1');
 							}
 							else{
 								$pagedata['response'] = '<div class="alert alert-error">Failed to Add Image</div>';
@@ -235,6 +238,8 @@ class Artisan extends MY_Controller{
 					}
 				} // form validation
             }
+			
+			if($this->input->get('q') == 1) $pagedata['response'] = '<div class="alert alert-success">Artisan Added!</div>';
 			
 			$pagedata['enterprises'] = $this->mod_enterprise->get_all();
 

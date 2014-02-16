@@ -28,7 +28,7 @@
 
 <div class="clearfix">
 	<div class="pull-right">
-    	<button type="button" class="btn" onclick="window.history.back()">Cancel</button>
+    	<a role="button" class="btn" href="<?=site_url('article/listings');?>">Cancel</a>
     	<button type="submit" class="btn btn-primary" name="save_article"><i class="icon-save"></i> Save</button>
         <input type="hidden" name="id" value="<?=$this->uri->segment(3);?>" />        
     </div>

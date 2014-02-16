@@ -11,21 +11,21 @@
     
     <div class="span9">
         <div>
-            <label for="artisan_name">Artisan Name</label>
+            <label for="artisan_name">Artisan Name <?=form_error('artisan_name','<span class="label label-danger arrowed">', '</span>');?></label>
             <div>
                 <input type="text" class="input-block-level" id="artisan_name" name="artisan_name" value="<?php echo set_value('artisan_name'); ?>" autofocus />
             </div>
         </div>
     
-        <div>
-            <label for="artisan_description">About the Artisan</label>
+        <div class="margin-bottom">
+            <label for="artisan_description">About the Artisan <?=form_error('artisan_description','<span class="label label-danger arrowed">', '</span>');?></label>
             <div>
-                <textarea class="form-control input-block-level limited" maxlength="500" id="artisan_description" name="artisan_description" rows="5" required><?php echo set_value('artisan_description'); ?></textarea>
+                <textarea class="form-control input-block-level limited content-description" id="artisan_description" name="artisan_description" rows="5"><?php echo set_value('artisan_description'); ?></textarea>
             </div>
         </div>
         
         <div>
-            <label for="category_name">Enterprise</label>
+        	<label for="category_name">Enterprise <?=form_error('enterprise[]','<span class="label label-danger arrowed">', '</span>');?></label>
             <div>
                 <select id="enterprise_id" name="enterprise[]" class="input-xxlarge chosen-select tag-input-style" multiple="" style="display: none;" data-placeholder="Choose Enterprise...">
 					<?php foreach($enterprises as $ent): ?>
@@ -41,7 +41,7 @@
 
 <div class="clearfix">
     <div class="pull-right">
-        <button type="button" class="btn" onclick="window.history.back()">Cancel</button>
+        <a role="button" class="btn" href="<?=site_url('artisan/listings');?>">Cancel</a>
         <button type="submit" class="btn btn-primary" name="save_artisan"><i class="icon-save"></i> Save</button>
     </div>
 </div>

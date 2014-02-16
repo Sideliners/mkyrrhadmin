@@ -178,6 +178,14 @@ class Mod_artisan extends CI_Model{
 		}
 	}
 	
+	function reset_image($artisan_id){
+		if($this->revert_photos($artisan_id)){
+			return TRUE;
+		}
+		
+		return FALSE;
+	}
+	
 	private function revert_photos($artisan_id){
 		$this->db->where('artisan_id', $artisan_id);
 		$revert = $this->db->update($this->artisan_album, array('is_primary' => 0));

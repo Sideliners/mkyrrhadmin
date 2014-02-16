@@ -1,8 +1,15 @@
 $(function(){
+	tinymce.init({
+		selector	: 'textarea.content-description',
+		menubar	: false
+	});
+	
+	/*
     $('textarea.limited').inputlimiter({
         remText: '%n character%s remaining...',
         limitText: 'max allowed : %n.'
     });
+	*/
 
     $(".chosen-select").chosen();
     

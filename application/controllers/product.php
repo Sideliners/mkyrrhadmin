@@ -8,7 +8,7 @@ class Product extends MY_Controller{
 	
 	public function index(){
 		if($this->user->is_logged_in()){
-			$contentdata['script'] = array('admin', 'product', 'common', 'chosen.jquery.min', 'jquery.inputlimiter.1.3.1.min');
+			$contentdata['script'] = array('admin', 'product', 'common', 'chosen.jquery.min');
             $contentdata['styles'] = array('chosen');
 			
 			if(!is_numeric($this->uri->segment('2'))) redirect(base_url('404_override'));
@@ -58,7 +58,7 @@ class Product extends MY_Controller{
 		}
 	}
 	
-	public function lists(){		
+	public function listings(){		
         if($this->user->is_logged_in()){
             $contentdata['script'] = array('admin', 'prod_list', 'common');
             $contentdata['styles'] = NULL;
@@ -116,7 +116,7 @@ class Product extends MY_Controller{
 	
 	public function create(){
         if($this->user->is_logged_in()){
-            $contentdata['script'] = array('admin', 'product', 'jquery.inputlimiter.1.3.1.min', 'chosen.jquery.min');
+            $contentdata['script'] = array('admin', 'tinymce/tinymce.min', 'chosen.jquery.min', 'product');
             $contentdata['styles'] = array('chosen');
 
             $pagedata = $this->_page_defaults('New Product', 'products', 'productslist');
@@ -157,20 +157,29 @@ class Product extends MY_Controller{
 					}
 					
 					if($product_id && $collection_response && $artisan_response){
-						$upload = (object)$this->upload_image($product_id);
-						
-						if($upload->status){
-							$add_image = $this->mod_product->add_photo(array('product_image' => $upload->response->file_name, 'product_id' => $product_id, 'is_primary' => 1));
+						if(isset($_FILES['product_image']['size']) && $_FILES['product_image']['size'] > 0){
+							$upload = (object)$this->upload_image($product_id);
 							
-							if($add_image){
-								$pagedata['response'] = '<div class="alert alert-success">Product Added!</div>';
+							if($upload->status){
+								$add_image = $this->mod_product->add_photo(array('product_image' => $upload->response->file_name, 'product_id' => $product_id, 'is_primary' => 1));
+								
+								if($add_image){
+									$pagedata['response'] = '<div class="alert alert-success">Product Added!</div>';
+								}
+								else{
+									$pagedata['response'] = $upload->response;
+								}
 							}
 							else{
-								$pagedata['response'] = '<div class="alert alert-error">Failed to Add Image</div>';
+								$pagedata['response'] = $upload->response;
 							}
 						}
 						else{
-							$pagedata['response'] = $upload->response;
+							$add_image = $this->mod_product->add_photo(array('product_image' => 'default.gif', 'product_id' => $product_id, 'is_primary' => 1));
+							
+							$pagedata['response'] = '<div class="alert alert-success">Product Added!</div>';
+							
+							redirect(current_url().'?q=1');
 						}
 					}
 					else{
@@ -178,6 +187,8 @@ class Product extends MY_Controller{
 					}
 				} // form validation
 			}
+			
+			if($this->input->get('q') == 1) $pagedata['response'] = '<div class="alert alert-success">Product Added!</div>';
 			
 			$pagedata['collections'] = $this->mod_collection->get_all();
             $pagedata['artisans'] = $this->mod_artisan->get_artisans();

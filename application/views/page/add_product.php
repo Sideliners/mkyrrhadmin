@@ -1,3 +1,5 @@
+<?php echo (isset($response))? $response : ''; ?>
+
 <?php echo form_open_multipart('', array('method' => 'post', 'role' => 'form')); ?>
 <div class="clearfix">
     <div class="span3">
@@ -13,10 +15,10 @@
                 <input type="text" class="input-block-level" id="product_name" name="product_name" value="<?php echo set_value('product_name'); ?>" autofocus  />
             </div>
         </div>
-        <div>
+        <div class="margin-bottom">
             <label for="prod_desc">Description <?=form_error('prod_desc','<span class="label label-danger arrowed">', '</span>');?></label>
             <div>
-                <textarea class="form-control input-block-level limited" maxlength="500" id="prod_desc" name="prod_desc" rows="5"  ><?php echo set_value('prod_desc'); ?></textarea>
+                <textarea class="form-control input-block-level limited content-description" id="prod_desc" name="prod_desc" rows="5"  ><?php echo set_value('prod_desc'); ?></textarea>
             </div>
         </div> <!-- name and description -->
         
@@ -94,7 +96,7 @@
     <div class="span3">
         <div class="">
             <label>Product Image</label>
-            <p>Upload image of this product.</p>
+            <p>Upload image of this product. <br /><small>(Valid image type: <strong>gif, jpg, pjpeg, jpeg, png, x-png</strong>)</small></p>
         </div>
     </div>
     <div class="span9">
@@ -109,7 +111,7 @@
 
 <div class="clearfix">
 	<div class="pull-right">
-    	<button type="button" class="btn" onclick="window.history.back()">Cancel</button>
+    	<a role="button" class="btn" href="<?=site_url('product/listings');?>">Cancel</a>
     	<button type="submit" class="btn btn-primary" name="save_product"><i class="icon-save"></i> Save</button>
     </div>
 </div>

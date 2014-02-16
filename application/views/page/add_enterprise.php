@@ -43,7 +43,7 @@
 
 <div class="clearfix">
     <div class="pull-right">
-        <button type="button" class="btn" onclick="window.history.back()">Cancel</button>
+        <a role="button" class="btn" href="<?=site_url('enterprise/listings');?>">Cancel</a>
         <button type="submit" class="btn btn-primary" name="save_enterprise"><i class="icon-save"></i> Save</button>
     </div>
 </div>
